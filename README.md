@@ -37,12 +37,12 @@ xcodebuild -project Gomoku.xcodeproj -scheme Gomoku -destination 'platform=iOS S
 https://github.com/googleads/swift-package-manager-google-mobile-ads.git
 ```
 
-目前使用 Google 測試值：
+目前設定為正式 AdMob 值：
 
-- App ID: `ca-app-pub-3940256099942544~1458002511`
-- Banner ad unit: `ca-app-pub-3940256099942544/2435281174`
+- App ID: `ca-app-pub-8563333250584395~5604315500`
+- Banner ad unit: `ca-app-pub-8563333250584395/6733605907`
 
-正式上架前請修改：
+若日後要更換 AdMob App 或廣告單元，請修改：
 
 - [GomokuApp/AppConfig.swift](GomokuApp/AppConfig.swift) 的 `admobAppID`、`admobBannerAdUnitID`
 - [GomokuApp/Resources/Info.plist](GomokuApp/Resources/Info.plist) 的 `GADApplicationIdentifier`
