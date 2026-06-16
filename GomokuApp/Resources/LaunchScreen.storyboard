@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="launch-vc">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <scene sceneID="launch-scene">
+            <objects>
+                <viewController id="launch-vc" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="launch-root">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="top-sun">
+                                <rect key="frame" x="-72" y="-84" width="240" height="240"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="236"/>
+                                <color key="textColor" red="1" green="0.82" blue="0.30" alpha="0.34" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="top-sun-width"/>
+                                    <constraint firstAttribute="height" constant="240" id="top-sun-height"/>
+                                </constraints>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="bottom-mint">
+                                <rect key="frame" x="234" y="654" width="280" height="280"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="276"/>
+                                <color key="textColor" red="0.35" green="0.83" blue="0.66" alpha="0.28" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="bottom-mint-width"/>
+                                    <constraint firstAttribute="height" constant="280" id="bottom-mint-height"/>
+                                </constraints>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="berry-dot">
+                                <rect key="frame" x="34" y="650" width="82" height="82"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="78"/>
+                                <color key="textColor" red="1" green="0.41" blue="0.58" alpha="0.18" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="berry-dot-width"/>
+                                    <constraint firstAttribute="height" constant="82" id="berry-dot-height"/>
+                                </constraints>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="★" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="star-one">
+                                <rect key="frame" x="300" y="116" width="36" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" red="1" green="0.78" blue="0.22" alpha="0.72" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="♥" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="heart-one">
+                                <rect key="frame" x="58" y="206" width="30" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <color key="textColor" red="0.96" green="0.27" blue="0.50" alpha="0.48" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="GomokuMascots" translatesAutoresizingMaskIntoConstraints="NO" id="mascots">
+                                <rect key="frame" x="101.5" y="190" width="190" height="145"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="190" id="mascots-width"/>
+                                    <constraint firstAttribute="height" constant="145" id="mascots-height"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="五子棋" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="YES" minimumScaleFactor="0.72" translatesAutoresizingMaskIntoConstraints="NO" id="title">
+                                <rect key="frame" x="72" y="347" width="249" height="55"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="46"/>
+                                <color key="textColor" red="0.18" green="0.17" blue="0.30" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="五子棋準備中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="YES" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="subtitle">
+                                <rect key="frame" x="93" y="410" width="207" height="25"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" red="0.91" green="0.25" blue="0.48" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mini-board">
+                                <rect key="frame" x="140.5" y="463" width="112" height="112"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="stone-1">
+                                        <rect key="frame" x="16" y="40" width="28" height="32"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="textColor" red="0.08" green="0.07" blue="0.12" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="stone-2">
+                                        <rect key="frame" x="34" y="40" width="28" height="32"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="textColor" red="0.08" green="0.07" blue="0.12" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="stone-3">
+                                        <rect key="frame" x="52" y="40" width="28" height="32"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="textColor" red="0.08" green="0.07" blue="0.12" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="stone-4">
+                                        <rect key="frame" x="70" y="40" width="28" height="32"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="textColor" red="0.08" green="0.07" blue="0.12" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="●" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="stone-5">
+                                        <rect key="frame" x="88" y="40" width="28" height="32"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="textColor" red="0.08" green="0.07" blue="0.12" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.71" blue="0.40" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="112" id="mini-board-width"/>
+                                    <constraint firstAttribute="height" constant="112" id="mini-board-height"/>
+                                    <constraint firstItem="stone-1" firstAttribute="centerY" secondItem="mini-board" secondAttribute="centerY" id="stone-1-y"/>
+                                    <constraint firstItem="stone-1" firstAttribute="centerX" secondItem="mini-board" secondAttribute="centerX" constant="-36" id="stone-1-x"/>
+                                    <constraint firstItem="stone-2" firstAttribute="centerY" secondItem="mini-board" secondAttribute="centerY" id="stone-2-y"/>
+                                    <constraint firstItem="stone-2" firstAttribute="centerX" secondItem="mini-board" secondAttribute="centerX" constant="-18" id="stone-2-x"/>
+                                    <constraint firstItem="stone-3" firstAttribute="centerY" secondItem="mini-board" secondAttribute="centerY" id="stone-3-y"/>
+                                    <constraint firstItem="stone-3" firstAttribute="centerX" secondItem="mini-board" secondAttribute="centerX" id="stone-3-x"/>
+                                    <constraint firstItem="stone-4" firstAttribute="centerY" secondItem="mini-board" secondAttribute="centerY" id="stone-4-y"/>
+                                    <constraint firstItem="stone-4" firstAttribute="centerX" secondItem="mini-board" secondAttribute="centerX" constant="18" id="stone-4-x"/>
+                                    <constraint firstItem="stone-5" firstAttribute="centerY" secondItem="mini-board" secondAttribute="centerY" id="stone-5-y"/>
+                                    <constraint firstItem="stone-5" firstAttribute="centerX" secondItem="mini-board" secondAttribute="centerX" constant="36" id="stone-5-x"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="準備開局" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="YES" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="ready">
+                                <rect key="frame" x="123" y="603" width="147" height="26"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <color key="textColor" red="0.18" green="0.17" blue="0.30" alpha="0.68" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="safe-area"/>
+                        <color key="backgroundColor" red="0.88" green="0.98" blue="0.94" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="top-sun" firstAttribute="top" secondItem="launch-root" secondAttribute="top" constant="-84" id="top-sun-top"/>
+                            <constraint firstItem="top-sun" firstAttribute="leading" secondItem="launch-root" secondAttribute="leading" constant="-72" id="top-sun-leading"/>
+                            <constraint firstAttribute="trailing" secondItem="bottom-mint" secondAttribute="trailing" constant="-121" id="bottom-mint-trailing"/>
+                            <constraint firstAttribute="bottom" secondItem="bottom-mint" secondAttribute="bottom" constant="-82" id="bottom-mint-bottom"/>
+                            <constraint firstItem="berry-dot" firstAttribute="leading" secondItem="launch-root" secondAttribute="leading" constant="34" id="berry-dot-leading"/>
+                            <constraint firstAttribute="bottom" secondItem="berry-dot" secondAttribute="bottom" constant="120" id="berry-dot-bottom"/>
+                            <constraint firstItem="star-one" firstAttribute="trailing" secondItem="safe-area" secondAttribute="trailing" constant="-56" id="star-one-trailing"/>
+                            <constraint firstItem="star-one" firstAttribute="top" secondItem="safe-area" secondAttribute="top" constant="58" id="star-one-top"/>
+                            <constraint firstItem="heart-one" firstAttribute="leading" secondItem="safe-area" secondAttribute="leading" constant="58" id="heart-one-leading"/>
+                            <constraint firstItem="heart-one" firstAttribute="top" secondItem="safe-area" secondAttribute="top" constant="146" id="heart-one-top"/>
+                            <constraint firstItem="mascots" firstAttribute="centerX" secondItem="launch-root" secondAttribute="centerX" id="mascots-center-x"/>
+                            <constraint firstItem="mascots" firstAttribute="centerY" secondItem="launch-root" secondAttribute="centerY" constant="-165" id="mascots-center-y"/>
+                            <constraint firstItem="title" firstAttribute="top" secondItem="mascots" secondAttribute="bottom" constant="12" id="title-top"/>
+                            <constraint firstItem="title" firstAttribute="centerX" secondItem="launch-root" secondAttribute="centerX" id="title-center-x"/>
+                            <constraint firstItem="title" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="safe-area" secondAttribute="leading" constant="32" id="title-leading"/>
+                            <constraint firstItem="safe-area" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="title" secondAttribute="trailing" constant="32" id="title-trailing"/>
+                            <constraint firstItem="subtitle" firstAttribute="top" secondItem="title" secondAttribute="bottom" constant="8" id="subtitle-top"/>
+                            <constraint firstItem="subtitle" firstAttribute="centerX" secondItem="launch-root" secondAttribute="centerX" id="subtitle-center-x"/>
+                            <constraint firstItem="subtitle" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="safe-area" secondAttribute="leading" constant="32" id="subtitle-leading"/>
+                            <constraint firstItem="safe-area" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="subtitle" secondAttribute="trailing" constant="32" id="subtitle-trailing"/>
+                            <constraint firstItem="mini-board" firstAttribute="top" secondItem="subtitle" secondAttribute="bottom" constant="28" id="mini-board-top"/>
+                            <constraint firstItem="mini-board" firstAttribute="centerX" secondItem="launch-root" secondAttribute="centerX" id="mini-board-center-x"/>
+                            <constraint firstItem="ready" firstAttribute="top" secondItem="mini-board" secondAttribute="bottom" constant="28" id="ready-top"/>
+                            <constraint firstItem="ready" firstAttribute="centerX" secondItem="launch-root" secondAttribute="centerX" id="ready-center-x"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="first-responder" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="GomokuMascots" width="1024" height="1024"/>
+    </resources>
+</document>

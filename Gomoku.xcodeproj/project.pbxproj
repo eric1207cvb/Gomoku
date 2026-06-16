@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		100000000000000000000101 /* GomokuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000201 /* GomokuApp.swift */; };
+		100000000000000000000102 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000202 /* AppConfig.swift */; };
+		100000000000000000000103 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000203 /* GameViewModel.swift */; };
+		100000000000000000000104 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000204 /* ContentView.swift */; };
+		100000000000000000000105 /* GomokuBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000205 /* GomokuBoardView.swift */; };
+		100000000000000000000106 /* AdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000206 /* AdBannerView.swift */; };
+		100000000000000000000107 /* RemoveAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000207 /* RemoveAdsView.swift */; };
+		100000000000000000000108 /* MonetizationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000208 /* MonetizationStore.swift */; };
+		100000000000000000000120 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000218 /* LegalView.swift */; };
+		100000000000000000000121 /* VictoryCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000219 /* VictoryCelebrationView.swift */; };
+		100000000000000000000109 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000209 /* Move.swift */; };
+		100000000000000000000110 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000210 /* Stone.swift */; };
+		100000000000000000000111 /* GameOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000211 /* GameOutcome.swift */; };
+		100000000000000000000112 /* GomokuBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000212 /* GomokuBoard.swift */; };
+		100000000000000000000113 /* AIDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000213 /* AIDifficulty.swift */; };
+		100000000000000000000114 /* LocalGomokuAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000214 /* LocalGomokuAI.swift */; };
+		100000000000000000000115 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000215 /* Assets.xcassets */; };
+		100000000000000000000116 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000217 /* PrivacyInfo.xcprivacy */; };
+		100000000000000000000122 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000220 /* LaunchScreen.storyboard */; };
+		100000000000000000000117 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000901 /* GoogleMobileAds */; };
+		100000000000000000000118 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000902 /* RevenueCat */; };
+		100000000000000000000119 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000903 /* RevenueCatUI */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		100000000000000000000200 /* Gomoku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gomoku.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		100000000000000000000201 /* GomokuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuApp.swift; sourceTree = "<group>"; };
+		100000000000000000000202 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		100000000000000000000203 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		100000000000000000000204 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		100000000000000000000205 /* GomokuBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuBoardView.swift; sourceTree = "<group>"; };
+		100000000000000000000206 /* AdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdBannerView.swift; sourceTree = "<group>"; };
+		100000000000000000000207 /* RemoveAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAdsView.swift; sourceTree = "<group>"; };
+		100000000000000000000208 /* MonetizationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetizationStore.swift; sourceTree = "<group>"; };
+		100000000000000000000218 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
+		100000000000000000000219 /* VictoryCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryCelebrationView.swift; sourceTree = "<group>"; };
+		100000000000000000000209 /* Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
+		100000000000000000000210 /* Stone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
+		100000000000000000000211 /* GameOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOutcome.swift; sourceTree = "<group>"; };
+		100000000000000000000212 /* GomokuBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuBoard.swift; sourceTree = "<group>"; };
+		100000000000000000000213 /* AIDifficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDifficulty.swift; sourceTree = "<group>"; };
+		100000000000000000000214 /* LocalGomokuAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalGomokuAI.swift; sourceTree = "<group>"; };
+		100000000000000000000215 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		100000000000000000000216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		100000000000000000000217 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		100000000000000000000220 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		100000000000000000000301 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				100000000000000000000117 /* GoogleMobileAds in Frameworks */,
+				100000000000000000000118 /* RevenueCat in Frameworks */,
+				100000000000000000000119 /* RevenueCatUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		100000000000000000000401 = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000402 /* GomokuApp */,
+				100000000000000000000406 /* GomokuCore */,
+				100000000000000000000407 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		100000000000000000000402 /* GomokuApp */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000201 /* GomokuApp.swift */,
+				100000000000000000000202 /* AppConfig.swift */,
+				100000000000000000000203 /* GameViewModel.swift */,
+				100000000000000000000403 /* Views */,
+				100000000000000000000404 /* Services */,
+				100000000000000000000405 /* Resources */,
+			);
+			path = GomokuApp;
+			sourceTree = "<group>";
+		};
+		100000000000000000000403 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000204 /* ContentView.swift */,
+				100000000000000000000205 /* GomokuBoardView.swift */,
+				100000000000000000000206 /* AdBannerView.swift */,
+				100000000000000000000207 /* RemoveAdsView.swift */,
+				100000000000000000000218 /* LegalView.swift */,
+				100000000000000000000219 /* VictoryCelebrationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		100000000000000000000404 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000208 /* MonetizationStore.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		100000000000000000000405 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000215 /* Assets.xcassets */,
+				100000000000000000000216 /* Info.plist */,
+				100000000000000000000217 /* PrivacyInfo.xcprivacy */,
+				100000000000000000000220 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		100000000000000000000406 /* GomokuCore */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000209 /* Move.swift */,
+				100000000000000000000210 /* Stone.swift */,
+				100000000000000000000211 /* GameOutcome.swift */,
+				100000000000000000000212 /* GomokuBoard.swift */,
+				100000000000000000000213 /* AIDifficulty.swift */,
+				100000000000000000000214 /* LocalGomokuAI.swift */,
+			);
+			path = Sources/GomokuCore;
+			sourceTree = "<group>";
+		};
+		100000000000000000000407 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000200 /* Gomoku.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		100000000000000000000501 /* Gomoku */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 100000000000000000000701 /* Build configuration list for PBXNativeTarget "Gomoku" */;
+			buildPhases = (
+				100000000000000000000601 /* Sources */,
+				100000000000000000000301 /* Frameworks */,
+				100000000000000000000602 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Gomoku;
+			packageProductDependencies = (
+				100000000000000000000901 /* GoogleMobileAds */,
+				100000000000000000000902 /* RevenueCat */,
+				100000000000000000000903 /* RevenueCatUI */,
+			);
+			productName = Gomoku;
+			productReference = 100000000000000000000200 /* Gomoku.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		100000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					100000000000000000000501 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 100000000000000000000700 /* Build configuration list for PBXProject "Gomoku" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 100000000000000000000401;
+			packageReferences = (
+				100000000000000000000801 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
+			productRefGroup = 100000000000000000000407 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				100000000000000000000501 /* Gomoku */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		100000000000000000000602 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				100000000000000000000115 /* Assets.xcassets in Resources */,
+				100000000000000000000116 /* PrivacyInfo.xcprivacy in Resources */,
+				100000000000000000000122 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		100000000000000000000601 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				100000000000000000000101 /* GomokuApp.swift in Sources */,
+				100000000000000000000102 /* AppConfig.swift in Sources */,
+				100000000000000000000103 /* GameViewModel.swift in Sources */,
+				100000000000000000000104 /* ContentView.swift in Sources */,
+				100000000000000000000105 /* GomokuBoardView.swift in Sources */,
+				100000000000000000000106 /* AdBannerView.swift in Sources */,
+				100000000000000000000107 /* RemoveAdsView.swift in Sources */,
+				100000000000000000000108 /* MonetizationStore.swift in Sources */,
+				100000000000000000000120 /* LegalView.swift in Sources */,
+				100000000000000000000121 /* VictoryCelebrationView.swift in Sources */,
+				100000000000000000000109 /* Move.swift in Sources */,
+				100000000000000000000110 /* Stone.swift in Sources */,
+				100000000000000000000111 /* GameOutcome.swift in Sources */,
+				100000000000000000000112 /* GomokuBoard.swift in Sources */,
+				100000000000000000000113 /* AIDifficulty.swift in Sources */,
+				100000000000000000000114 /* LocalGomokuAI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		100000000000000000000711 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		100000000000000000000712 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		100000000000000000000721 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GomokuApp/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = GomokuApp/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eric1207cvb.gomoku;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		100000000000000000000722 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GomokuApp/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = GomokuApp/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eric1207cvb.gomoku;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		100000000000000000000700 /* Build configuration list for PBXProject "Gomoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				100000000000000000000711 /* Debug */,
+				100000000000000000000712 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		100000000000000000000701 /* Build configuration list for PBXNativeTarget "Gomoku" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				100000000000000000000721 /* Debug */,
+				100000000000000000000722 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		100000000000000000000801 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+		100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		100000000000000000000901 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 100000000000000000000801 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+		100000000000000000000902 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		100000000000000000000903 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 100000000000000000000001 /* Project object */;
+}
