@@ -21,7 +21,7 @@ struct ContentView: View {
         GeometryReader { proxy in
             let isLandscape = proxy.size.width > proxy.size.height
             let isPhoneLandscape = isLandscape && proxy.size.height < 500
-            let landscapeChromeReserve: CGFloat = isLandscape ? (isPhoneLandscape ? 56 : 78) : 0
+            let landscapeChromeReserve: CGFloat = isLandscape ? (isPhoneLandscape ? 0 : 78) : 0
             let usesSidebar = proxy.size.width >= 900 && proxy.size.height >= 640 && isLandscape
             let usesCompactLandscape = !usesSidebar && isLandscape && proxy.size.width >= 560
             let isTabletPortrait = proxy.size.width >= 700 && !usesSidebar
@@ -54,10 +54,12 @@ struct ContentView: View {
                         .padding(.top, outerPadding)
                     } else if usesCompactLandscape {
                         let outerPadding: CGFloat = 8
+                        let topPadding: CGFloat = isPhoneLandscape ? 32 : outerPadding
+                        let bottomPadding: CGFloat = outerPadding
                         let gap: CGFloat = 10
                         let panelWidth = min(320, max(270, proxy.size.width * 0.34))
                         let boardAvailableWidth = proxy.size.width - outerPadding * 2 - gap - panelWidth
-                        let boardAvailableHeight = proxy.size.height - landscapeChromeReserve - outerPadding * 2 - 12
+                        let boardAvailableHeight = proxy.size.height - landscapeChromeReserve - topPadding - bottomPadding - 12
                         let boardDimension = max(220, min(boardAvailableWidth, boardAvailableHeight))
 
                         HStack(alignment: .top, spacing: gap) {
@@ -78,7 +80,10 @@ struct ContentView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.horizontal, outerPadding)
-                        .padding(.top, outerPadding)
+                        .padding(.top, topPadding)
+                        .transaction { transaction in
+                            transaction.animation = nil
+                        }
                     } else if isTabletPortrait {
                         let outerPadding: CGFloat = 10
                         let statusHeight: CGFloat = 64
@@ -153,6 +158,7 @@ struct ContentView: View {
                 .navigationTitle(isPhoneLandscape ? "" : "五子棋")
                 .inlineNavigationTitle()
                 .tint(KidTheme.berry)
+                .toolbar(isPhoneLandscape ? .hidden : .visible, for: .navigationBar)
                 .toolbar {
                     #if os(iOS)
                     ToolbarItem(placement: .topBarLeading) {

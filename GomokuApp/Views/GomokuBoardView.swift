@@ -81,8 +81,8 @@ struct GomokuBoardView: View {
         let fontSize = max(5.5, min(11, metrics.cell * 0.24))
         let labelColor = Color(red: 0.25, green: 0.15, blue: 0.19).opacity(0.48)
         let labelFont = Font.system(size: fontSize, weight: .heavy, design: .rounded)
-        let topY = metrics.gridStart.y - metrics.cell * 0.36
-        let leftX = metrics.gridStart.x - metrics.cell * 0.38
+        let topY = metrics.gridStart.y - metrics.cell * 0.26
+        let leftX = metrics.gridStart.x - metrics.cell * 0.34
 
         for index in 0..<board.size {
             let columnPoint = CGPoint(
