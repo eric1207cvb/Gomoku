@@ -47,6 +47,7 @@ https://github.com/googleads/swift-package-manager-google-mobile-ads.git
 - 程式碼在 [GomokuApp/Services/MonetizationStore.swift](GomokuApp/Services/MonetizationStore.swift) 已設定：
   - `maxAdContentRating = .general`
   - `tagForChildDirectedTreatment = true`
+  - `tagForUnderAgeOfConsent = true`
   - `publisherPrivacyPersonalizationState = .disabled`
 - 目前不要求 App Tracking Transparency，也不要在兒童版加入 IDFA/追蹤授權提示。
 - AdMob 後台建議：
