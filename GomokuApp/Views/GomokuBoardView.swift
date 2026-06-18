@@ -68,12 +68,47 @@ struct GomokuBoardView: View {
         }
         context.stroke(boardPath, with: .color(.white.opacity(0.75)), lineWidth: max(2, metrics.cell * 0.08))
 
+        drawCoordinateLabels(context: context, metrics: metrics)
         drawGrid(context: context, metrics: metrics)
         drawStarPoints(context: context, metrics: metrics)
         drawMoveHints(context: context, metrics: metrics)
         drawAIHighlight(context: context, metrics: metrics, animationPhase: animationPhase)
         drawWinningLine(context: context, metrics: metrics)
         drawStones(context: context, metrics: metrics)
+    }
+
+    private func drawCoordinateLabels(context: GraphicsContext, metrics: BoardMetrics) {
+        let fontSize = max(5.5, min(11, metrics.cell * 0.24))
+        let labelColor = Color(red: 0.25, green: 0.15, blue: 0.19).opacity(0.48)
+        let labelFont = Font.system(size: fontSize, weight: .heavy, design: .rounded)
+        let topY = metrics.gridStart.y - metrics.cell * 0.36
+        let leftX = metrics.gridStart.x - metrics.cell * 0.38
+
+        for index in 0..<board.size {
+            let columnPoint = CGPoint(
+                x: metrics.gridStart.x + CGFloat(index) * metrics.cell,
+                y: topY
+            )
+            context.draw(
+                Text(coordinateLetter(for: index))
+                    .font(labelFont)
+                    .foregroundStyle(labelColor),
+                at: columnPoint,
+                anchor: .center
+            )
+
+            let rowPoint = CGPoint(
+                x: leftX,
+                y: metrics.gridStart.y + CGFloat(index) * metrics.cell
+            )
+            context.draw(
+                Text("\(index + 1)")
+                    .font(labelFont)
+                    .foregroundStyle(labelColor),
+                at: rowPoint,
+                anchor: .center
+            )
+        }
     }
 
     private func drawGrid(context: GraphicsContext, metrics: BoardMetrics) {
@@ -477,6 +512,12 @@ struct GomokuBoardView: View {
             x: metrics.gridStart.x + CGFloat(move.column) * metrics.cell,
             y: metrics.gridStart.y + CGFloat(move.row) * metrics.cell
         )
+    }
+
+    private func coordinateLetter(for index: Int) -> String {
+        let safeIndex = min(max(index, 0), 25)
+        let scalar = UnicodeScalar(65 + safeIndex) ?? "A"
+        return String(Character(scalar))
     }
 
     private func boardMetrics(in size: CGSize) -> BoardMetrics {

@@ -20,7 +20,8 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { proxy in
             let isLandscape = proxy.size.width > proxy.size.height
-            let landscapeChromeReserve: CGFloat = isLandscape ? 78 : 0
+            let isPhoneLandscape = isLandscape && proxy.size.height < 500
+            let landscapeChromeReserve: CGFloat = isLandscape ? (isPhoneLandscape ? 56 : 78) : 0
             let usesSidebar = proxy.size.width >= 900 && proxy.size.height >= 640 && isLandscape
             let usesCompactLandscape = !usesSidebar && isLandscape && proxy.size.width >= 560
             let isTabletPortrait = proxy.size.width >= 700 && !usesSidebar
@@ -55,14 +56,17 @@ struct ContentView: View {
                         let outerPadding: CGFloat = 8
                         let gap: CGFloat = 10
                         let panelWidth = min(320, max(270, proxy.size.width * 0.34))
-                        let statusHeight: CGFloat = 64
-                        let boardSpacing: CGFloat = 8
                         let boardAvailableWidth = proxy.size.width - outerPadding * 2 - gap - panelWidth
-                        let boardAvailableHeight = proxy.size.height - landscapeChromeReserve - outerPadding * 2 - statusHeight - boardSpacing - 12
-                        let boardDimension = max(160, min(boardAvailableWidth, boardAvailableHeight))
+                        let boardAvailableHeight = proxy.size.height - landscapeChromeReserve - outerPadding * 2 - 12
+                        let boardDimension = max(220, min(boardAvailableWidth, boardAvailableHeight))
 
                         HStack(alignment: .top, spacing: gap) {
-                            boardArea(boardDimension: boardDimension, compact: true)
+                            boardArea(
+                                boardDimension: boardDimension,
+                                compact: true,
+                                showsStatusBar: false,
+                                showsBoardStickers: false
+                            )
                                 .frame(width: boardDimension)
 
                             ScrollView {
@@ -146,7 +150,7 @@ struct ContentView: View {
 
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .navigationTitle("五子棋")
+                .navigationTitle(isPhoneLandscape ? "" : "五子棋")
                 .inlineNavigationTitle()
                 .tint(KidTheme.berry)
                 .toolbar {
@@ -403,16 +407,23 @@ struct ContentView: View {
         .padding(22)
     }
 
-    private func boardArea(boardDimension: CGFloat?, compact: Bool) -> some View {
+    private func boardArea(
+        boardDimension: CGFloat?,
+        compact: Bool,
+        showsStatusBar: Bool = true,
+        showsBoardStickers: Bool = true
+    ) -> some View {
         VStack(spacing: compact ? 8 : 16) {
-            CuteStatusBar(
-                title: viewModel.statusTitle,
-                subtitle: "手數 \(viewModel.moveCountText)",
-                isThinking: viewModel.isAIThinking,
-                compact: compact,
-                onNewGame: restartGame
-            )
-            .frame(height: compact ? 64 : nil)
+            if showsStatusBar {
+                CuteStatusBar(
+                    title: viewModel.statusTitle,
+                    subtitle: "手數 \(viewModel.moveCountText)",
+                    isThinking: viewModel.isAIThinking,
+                    compact: compact,
+                    onNewGame: restartGame
+                )
+                .frame(height: compact ? 64 : nil)
+            }
 
             GomokuBoardView(
                 board: viewModel.board,
@@ -429,19 +440,38 @@ struct ContentView: View {
             .frame(width: boardDimension, height: boardDimension)
             .frame(maxWidth: boardDimension == nil ? 720 : nil)
             .overlay(alignment: .topTrailing) {
-                CandySticker(systemImage: "star.fill", color: KidTheme.sunny, compact: compact)
-                    .offset(x: compact ? 6 : 8, y: compact ? -6 : -8)
+                if showsBoardStickers {
+                    CandySticker(systemImage: "star.fill", color: KidTheme.sunny, compact: compact)
+                        .offset(x: compact ? 6 : 8, y: compact ? -6 : -8)
+                }
             }
             .overlay(alignment: .bottomLeading) {
-                CandySticker(systemImage: "heart.fill", color: KidTheme.berry, compact: compact)
-                    .offset(x: compact ? -5 : -7, y: compact ? 5 : 7)
+                if showsBoardStickers {
+                    CandySticker(systemImage: "heart.fill", color: KidTheme.berry, compact: compact)
+                        .offset(x: compact ? -5 : -7, y: compact ? 5 : 7)
+                }
             }
         }
     }
 
     private func controlPanel(compact: Bool) -> some View {
         VStack(alignment: .leading, spacing: compact ? 9 : 11) {
-            dashboardHeader(compact: compact)
+            if compact {
+                HStack(spacing: 8) {
+                    dashboardHeader(compact: compact)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Button {
+                        restartGame()
+                    } label: {
+                        Label("新局", systemImage: "arrow.clockwise")
+                    }
+                    .buttonStyle(CutePrimaryButtonStyle(compact: true))
+                    .fixedSize(horizontal: true, vertical: false)
+                    .accessibilityLabel("新局")
+                }
+            } else {
+                dashboardHeader(compact: compact)
+            }
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 2), spacing: 8) {
                 turnInfoChip(compact: compact)
