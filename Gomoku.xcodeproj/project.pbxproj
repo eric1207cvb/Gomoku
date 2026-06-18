@@ -15,8 +15,6 @@
 		100000000000000000000106 /* AdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000206 /* AdBannerView.swift */; };
 		100000000000000000000107 /* RemoveAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000207 /* RemoveAdsView.swift */; };
 		100000000000000000000108 /* MonetizationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000208 /* MonetizationStore.swift */; };
-		100000000000000000000120 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000218 /* LegalView.swift */; };
-		100000000000000000000121 /* VictoryCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000219 /* VictoryCelebrationView.swift */; };
 		100000000000000000000109 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000209 /* Move.swift */; };
 		100000000000000000000110 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000210 /* Stone.swift */; };
 		100000000000000000000111 /* GameOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000211 /* GameOutcome.swift */; };
@@ -25,10 +23,12 @@
 		100000000000000000000114 /* LocalGomokuAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000214 /* LocalGomokuAI.swift */; };
 		100000000000000000000115 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000215 /* Assets.xcassets */; };
 		100000000000000000000116 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000217 /* PrivacyInfo.xcprivacy */; };
-		100000000000000000000122 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000220 /* LaunchScreen.storyboard */; };
 		100000000000000000000117 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000901 /* GoogleMobileAds */; };
 		100000000000000000000118 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000902 /* RevenueCat */; };
 		100000000000000000000119 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000903 /* RevenueCatUI */; };
+		100000000000000000000120 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000218 /* LegalView.swift */; };
+		100000000000000000000121 /* VictoryCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000219 /* VictoryCelebrationView.swift */; };
+		100000000000000000000122 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000220 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,8 +41,6 @@
 		100000000000000000000206 /* AdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdBannerView.swift; sourceTree = "<group>"; };
 		100000000000000000000207 /* RemoveAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAdsView.swift; sourceTree = "<group>"; };
 		100000000000000000000208 /* MonetizationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetizationStore.swift; sourceTree = "<group>"; };
-		100000000000000000000218 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
-		100000000000000000000219 /* VictoryCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryCelebrationView.swift; sourceTree = "<group>"; };
 		100000000000000000000209 /* Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		100000000000000000000210 /* Stone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 		100000000000000000000211 /* GameOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOutcome.swift; sourceTree = "<group>"; };
@@ -52,7 +50,10 @@
 		100000000000000000000215 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		100000000000000000000216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		100000000000000000000217 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		100000000000000000000218 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
+		100000000000000000000219 /* VictoryCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryCelebrationView.swift; sourceTree = "<group>"; };
 		100000000000000000000220 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		100000000000000000000221 /* Gomoku.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gomoku.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				100000000000000000000402 /* GomokuApp */,
-				100000000000000000000406 /* GomokuCore */,
+				100000000000000000000406 /* Sources/GomokuCore */,
 				100000000000000000000407 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,11 +120,20 @@
 				100000000000000000000216 /* Info.plist */,
 				100000000000000000000217 /* PrivacyInfo.xcprivacy */,
 				100000000000000000000220 /* LaunchScreen.storyboard */,
+				100000000000000000000408 /* StoreKit */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		100000000000000000000406 /* GomokuCore */ = {
+		100000000000000000000408 /* StoreKit */ = {
+			isa = PBXGroup;
+			children = (
+				100000000000000000000221 /* Gomoku.storekit */,
+			);
+			path = StoreKit;
+			sourceTree = "<group>";
+		};
+		100000000000000000000406 /* Sources/GomokuCore */ = {
 			isa = PBXGroup;
 			children = (
 				100000000000000000000209 /* Move.swift */,
@@ -371,9 +381,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GomokuApp/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2RF44L5UDV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = GomokuApp/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.kids-games";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -384,6 +395,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -398,9 +410,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GomokuApp/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2RF44L5UDV;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = GomokuApp/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.kids-games";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -411,6 +424,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

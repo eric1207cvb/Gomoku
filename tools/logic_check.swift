@@ -26,6 +26,10 @@ struct LogicCheck {
         try checkOccupiedMove()
         try checkAIImmediateWin()
         try checkAIBlock()
+        try checkMasterCreatesDoubleOpenThree()
+        try checkMasterBlocksDoubleOpenThree()
+        try checkMasterCreatesDoubleWinThreat()
+        try checkMasterBlocksDoubleWinThreat()
         print("Logic checks passed")
     }
 
@@ -107,5 +111,53 @@ struct LogicCheck {
 
         let move = LocalGomokuAI(difficulty: .tactical).bestMove(on: board, for: .white)
         try check(move == Move(row: 7, column: 3) || move == Move(row: 7, column: 8), "AI should block open four")
+    }
+
+    private static func checkMasterCreatesDoubleOpenThree() throws {
+        var board = GomokuBoard()
+        try board.place(.white, at: Move(row: 7, column: 6))
+        try board.place(.white, at: Move(row: 7, column: 8))
+        try board.place(.white, at: Move(row: 6, column: 7))
+        try board.place(.white, at: Move(row: 8, column: 7))
+
+        let move = LocalGomokuAI(difficulty: .master).bestMove(on: board, for: .white)
+        try check(move == Move(row: 7, column: 7), "master should create a double open three")
+    }
+
+    private static func checkMasterBlocksDoubleOpenThree() throws {
+        var board = GomokuBoard()
+        try board.place(.black, at: Move(row: 7, column: 6))
+        try board.place(.black, at: Move(row: 7, column: 8))
+        try board.place(.black, at: Move(row: 6, column: 7))
+        try board.place(.black, at: Move(row: 8, column: 7))
+
+        let move = LocalGomokuAI(difficulty: .master).bestMove(on: board, for: .white)
+        try check(move == Move(row: 7, column: 7), "master should block an opponent double open three")
+    }
+
+    private static func checkMasterCreatesDoubleWinThreat() throws {
+        var board = GomokuBoard()
+        try board.place(.white, at: Move(row: 7, column: 5))
+        try board.place(.white, at: Move(row: 7, column: 6))
+        try board.place(.white, at: Move(row: 7, column: 8))
+        try board.place(.white, at: Move(row: 5, column: 7))
+        try board.place(.white, at: Move(row: 6, column: 7))
+        try board.place(.white, at: Move(row: 8, column: 7))
+
+        let move = LocalGomokuAI(difficulty: .master).bestMove(on: board, for: .white)
+        try check(move == Move(row: 7, column: 7), "master should create a double win threat")
+    }
+
+    private static func checkMasterBlocksDoubleWinThreat() throws {
+        var board = GomokuBoard()
+        try board.place(.black, at: Move(row: 7, column: 5))
+        try board.place(.black, at: Move(row: 7, column: 6))
+        try board.place(.black, at: Move(row: 7, column: 8))
+        try board.place(.black, at: Move(row: 5, column: 7))
+        try board.place(.black, at: Move(row: 6, column: 7))
+        try board.place(.black, at: Move(row: 8, column: 7))
+
+        let move = LocalGomokuAI(difficulty: .master).bestMove(on: board, for: .white)
+        try check(move == Move(row: 7, column: 7), "master should block an opponent double win threat")
     }
 }

@@ -4,13 +4,21 @@ struct GomokuBoardView: View {
     let board: GomokuBoard
     let lastMove: Move?
     let winningLine: [Move]
+    let hintMoves: [Move]
+    let aiHighlightedMove: Move?
     let canTap: Bool
     let onTap: (Move) -> Void
 
     var body: some View {
         GeometryReader { proxy in
-            Canvas { context, size in
-                drawBoard(context: context, size: size)
+            Group {
+                if aiHighlightedMove != nil {
+                    TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { timeline in
+                        boardCanvas(animationPhase: timeline.date.timeIntervalSinceReferenceDate)
+                    }
+                } else {
+                    boardCanvas(animationPhase: 0)
+                }
             }
             .contentShape(Rectangle())
             .gesture(
@@ -25,7 +33,17 @@ struct GomokuBoardView: View {
         .aspectRatio(1, contentMode: .fit)
     }
 
-    private func drawBoard(context: GraphicsContext, size: CGSize) {
+    private func boardCanvas(animationPhase: TimeInterval) -> some View {
+        Canvas { context, size in
+            drawBoard(
+                context: context,
+                size: size,
+                animationPhase: animationPhase
+            )
+        }
+    }
+
+    private func drawBoard(context: GraphicsContext, size: CGSize, animationPhase: TimeInterval) {
         let metrics = boardMetrics(in: size)
         let boardRect = CGRect(
             x: metrics.origin.x + metrics.cell * 0.28,
@@ -52,6 +70,8 @@ struct GomokuBoardView: View {
 
         drawGrid(context: context, metrics: metrics)
         drawStarPoints(context: context, metrics: metrics)
+        drawMoveHints(context: context, metrics: metrics)
+        drawAIHighlight(context: context, metrics: metrics, animationPhase: animationPhase)
         drawWinningLine(context: context, metrics: metrics)
         drawStones(context: context, metrics: metrics)
     }
@@ -92,6 +112,92 @@ struct GomokuBoardView: View {
                     lineWidth: max(1, metrics.cell * 0.025)
                 )
             }
+        }
+    }
+
+    private func drawMoveHints(context: GraphicsContext, metrics: BoardMetrics) {
+        for move in hintMoves.prefix(3) where board[move] == nil {
+            let center = center(for: move, metrics: metrics)
+            let radius = metrics.cell * 0.34
+            let innerRadius = radius * 0.58
+            let rect = CGRect(x: center.x - radius, y: center.y - radius, width: radius * 2, height: radius * 2)
+
+            context.drawLayer { layer in
+                layer.addFilter(.shadow(color: Color(red: 0.40, green: 0.22, blue: 0.36).opacity(0.18), radius: metrics.cell * 0.08, x: 0, y: metrics.cell * 0.04))
+                layer.fill(
+                    Path(ellipseIn: rect),
+                    with: .radialGradient(
+                        Gradient(colors: [
+                            .white.opacity(0.62),
+                            Color(red: 0.62, green: 0.92, blue: 0.82).opacity(0.46),
+                            Color(red: 0.96, green: 0.45, blue: 0.62).opacity(0.24)
+                        ]),
+                        center: center,
+                        startRadius: 1,
+                        endRadius: radius * 1.12
+                    )
+                )
+                layer.stroke(
+                    Path(ellipseIn: rect.insetBy(dx: radius * 0.04, dy: radius * 0.04)),
+                    with: .color(.white.opacity(0.78)),
+                    lineWidth: max(1.2, metrics.cell * 0.035)
+                )
+                layer.stroke(
+                    Path(ellipseIn: CGRect(x: center.x - innerRadius, y: center.y - innerRadius, width: innerRadius * 2, height: innerRadius * 2)),
+                    with: .color(Color(red: 0.34, green: 0.79, blue: 0.66).opacity(0.34)),
+                    lineWidth: max(1, metrics.cell * 0.026)
+                )
+            }
+        }
+    }
+
+    private func drawAIHighlight(context: GraphicsContext, metrics: BoardMetrics, animationPhase: TimeInterval) {
+        guard let aiHighlightedMove, board[aiHighlightedMove] != nil else { return }
+
+        let center = center(for: aiHighlightedMove, metrics: metrics)
+        let pulse = (sin(animationPhase * 4.2) + 1) / 2
+        let radius = metrics.cell * (0.58 + CGFloat(pulse) * 0.08)
+        let outerRadius = radius * 1.22
+        let outerRect = CGRect(
+            x: center.x - outerRadius,
+            y: center.y - outerRadius,
+            width: outerRadius * 2,
+            height: outerRadius * 2
+        )
+        let ringRect = CGRect(
+            x: center.x - radius,
+            y: center.y - radius,
+            width: radius * 2,
+            height: radius * 2
+        )
+        let sky = Color(red: 0.30, green: 0.67, blue: 0.94)
+        let mint = Color(red: 0.27, green: 0.78, blue: 0.62)
+
+        context.drawLayer { layer in
+            layer.addFilter(.shadow(color: sky.opacity(0.22), radius: metrics.cell * 0.20, x: 0, y: 0))
+            layer.fill(
+                Path(ellipseIn: outerRect),
+                with: .radialGradient(
+                    Gradient(colors: [
+                        sky.opacity(0.28),
+                        mint.opacity(0.14),
+                        Color.white.opacity(0.02)
+                    ]),
+                    center: center,
+                    startRadius: 1,
+                    endRadius: outerRadius
+                )
+            )
+            layer.stroke(
+                Path(ellipseIn: ringRect),
+                with: .color(.white.opacity(0.96)),
+                lineWidth: max(2.2, metrics.cell * 0.06)
+            )
+            layer.stroke(
+                Path(ellipseIn: ringRect.insetBy(dx: -metrics.cell * 0.08, dy: -metrics.cell * 0.08)),
+                with: .color(sky.opacity(0.70)),
+                lineWidth: max(1.6, metrics.cell * 0.045)
+            )
         }
     }
 

@@ -17,8 +17,12 @@ public enum AIDifficulty: String, CaseIterable, Codable, Sendable, Identifiable 
         case .tactical:
             "困難"
         case .master:
-            "高手"
+            "家長挑戰"
         }
+    }
+
+    public var maximumThinkingTime: TimeInterval {
+        3.0
     }
 
     var searchDepth: Int {
@@ -30,7 +34,7 @@ public enum AIDifficulty: String, CaseIterable, Codable, Sendable, Identifiable 
         case .tactical:
             2
         case .master:
-            3
+            4
         }
     }
 
@@ -43,7 +47,7 @@ public enum AIDifficulty: String, CaseIterable, Codable, Sendable, Identifiable 
         case .tactical:
             16
         case .master:
-            22
+            30
         }
     }
 
@@ -65,7 +69,7 @@ public enum AIDifficulty: String, CaseIterable, Codable, Sendable, Identifiable 
         case .tactical:
             96
         case .master:
-            104
+            116
         }
     }
 
@@ -82,5 +86,9 @@ public enum AIDifficulty: String, CaseIterable, Codable, Sendable, Identifiable 
         case .tactical, .master:
             1
         }
+    }
+
+    var prioritizesForcingThreats: Bool {
+        self == .tactical || self == .master
     }
 }

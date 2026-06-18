@@ -8,6 +8,7 @@ struct GomokuApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(monetization)
+                .preferredColorScheme(.light)
                 .task {
                     monetization.configure()
                 }

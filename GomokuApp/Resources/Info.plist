@@ -51,7 +51,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>用於提供更相關的廣告並衡量廣告成效。</string>
 </dict>
 </plist>

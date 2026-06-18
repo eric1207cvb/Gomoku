@@ -101,6 +101,8 @@ struct VictoryCelebrationOverlay: View {
 }
 
 struct EncouragementCelebrationOverlay: View {
+    let difficulty: AIDifficulty
+
     @State private var launched = false
     @State private var pulsing = false
 
@@ -132,13 +134,13 @@ struct EncouragementCelebrationOverlay: View {
                             .scaleEffect(pulsing ? 1.12 : 0.92)
                     }
 
-                    Text("差一點點")
+                    Text(copy.title)
                         .font(.system(.largeTitle, design: .rounded).weight(.black))
                         .foregroundStyle(VictoryTheme.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.72)
 
-                    Text("每一步都在變強")
+                    Text(copy.subtitle)
                         .font(.title3.weight(.heavy))
                         .foregroundStyle(VictoryTheme.berry)
                         .lineLimit(1)
@@ -146,7 +148,7 @@ struct EncouragementCelebrationOverlay: View {
 
                     HStack(spacing: 8) {
                         Image(systemName: "sparkles")
-                        Text("再挑戰一局")
+                        Text(copy.footer)
                         Image(systemName: "star.fill")
                     }
                     .font(.headline.weight(.heavy))
@@ -199,6 +201,29 @@ struct EncouragementCelebrationOverlay: View {
         }
         .allowsHitTesting(false)
     }
+
+    private var copy: EncouragementCopy {
+        switch difficulty {
+        case .beginner, .casual, .tactical:
+            EncouragementCopy(
+                title: "再試一次吧",
+                subtitle: "差一點點",
+                footer: "下一局再挑戰"
+            )
+        case .master:
+            EncouragementCopy(
+                title: "爸爸媽媽加油！！",
+                subtitle: "請再試一次吧！！",
+                footer: "換個想法再挑戰"
+            )
+        }
+    }
+}
+
+private struct EncouragementCopy {
+    let title: String
+    let subtitle: String
+    let footer: String
 }
 
 enum CelebrationHaptics {

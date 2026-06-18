@@ -84,4 +84,94 @@ final class GomokuCoreTests: XCTestCase {
 
         XCTAssertTrue(move == Move(row: 7, column: 3) || move == Move(row: 7, column: 8))
     }
+
+    func testMasterDifficultyUsesDeepestSearchAndLargestCandidatePool() {
+        XCTAssertEqual(AIDifficulty.master.displayName, "家長挑戰")
+        XCTAssertEqual(AIDifficulty.master.maximumThinkingTime, 3.0)
+        XCTAssertGreaterThan(AIDifficulty.master.searchDepth, AIDifficulty.tactical.searchDepth)
+        XCTAssertGreaterThan(AIDifficulty.master.candidateLimit, AIDifficulty.tactical.candidateLimit)
+        XCTAssertEqual(AIDifficulty.master.mistakeWindow, 1)
+        XCTAssertTrue(AIDifficulty.tactical.prioritizesForcingThreats)
+        XCTAssertTrue(AIDifficulty.master.prioritizesForcingThreats)
+    }
+
+    func testTacticalCreatesSingleReplyForcingThreatAtBoardEdge() throws {
+        var board = GomokuBoard()
+        try board.place(.white, at: Move(row: 0, column: 0))
+        try board.place(.white, at: Move(row: 0, column: 1))
+        try board.place(.white, at: Move(row: 0, column: 2))
+
+        let ai = LocalGomokuAI(difficulty: .tactical)
+        let move = ai.bestMove(on: board, for: .white)
+
+        XCTAssertEqual(move, Move(row: 0, column: 3))
+    }
+
+    func testTacticalBlocksOpponentSingleReplyForcingThreatAtBoardEdge() throws {
+        var board = GomokuBoard()
+        try board.place(.black, at: Move(row: 0, column: 0))
+        try board.place(.black, at: Move(row: 0, column: 1))
+        try board.place(.black, at: Move(row: 0, column: 2))
+
+        let ai = LocalGomokuAI(difficulty: .tactical)
+        let move = ai.bestMove(on: board, for: .white)
+
+        XCTAssertEqual(move, Move(row: 0, column: 3))
+    }
+
+    func testMasterCreatesDoubleOpenThreeThreat() throws {
+        var board = GomokuBoard()
+        try board.place(.white, at: Move(row: 7, column: 6))
+        try board.place(.white, at: Move(row: 7, column: 8))
+        try board.place(.white, at: Move(row: 6, column: 7))
+        try board.place(.white, at: Move(row: 8, column: 7))
+
+        let ai = LocalGomokuAI(difficulty: .master)
+        let move = ai.bestMove(on: board, for: .white)
+
+        XCTAssertEqual(move, Move(row: 7, column: 7))
+    }
+
+    func testMasterBlocksOpponentDoubleOpenThreeThreat() throws {
+        var board = GomokuBoard()
+        try board.place(.black, at: Move(row: 7, column: 6))
+        try board.place(.black, at: Move(row: 7, column: 8))
+        try board.place(.black, at: Move(row: 6, column: 7))
+        try board.place(.black, at: Move(row: 8, column: 7))
+
+        let ai = LocalGomokuAI(difficulty: .master)
+        let move = ai.bestMove(on: board, for: .white)
+
+        XCTAssertEqual(move, Move(row: 7, column: 7))
+    }
+
+    func testMasterCreatesDoubleWinThreat() throws {
+        var board = GomokuBoard()
+        try board.place(.white, at: Move(row: 7, column: 5))
+        try board.place(.white, at: Move(row: 7, column: 6))
+        try board.place(.white, at: Move(row: 7, column: 8))
+        try board.place(.white, at: Move(row: 5, column: 7))
+        try board.place(.white, at: Move(row: 6, column: 7))
+        try board.place(.white, at: Move(row: 8, column: 7))
+
+        let ai = LocalGomokuAI(difficulty: .master)
+        let move = ai.bestMove(on: board, for: .white)
+
+        XCTAssertEqual(move, Move(row: 7, column: 7))
+    }
+
+    func testMasterBlocksOpponentDoubleWinThreat() throws {
+        var board = GomokuBoard()
+        try board.place(.black, at: Move(row: 7, column: 5))
+        try board.place(.black, at: Move(row: 7, column: 6))
+        try board.place(.black, at: Move(row: 7, column: 8))
+        try board.place(.black, at: Move(row: 5, column: 7))
+        try board.place(.black, at: Move(row: 6, column: 7))
+        try board.place(.black, at: Move(row: 8, column: 7))
+
+        let ai = LocalGomokuAI(difficulty: .master)
+        let move = ai.bestMove(on: board, for: .white)
+
+        XCTAssertEqual(move, Move(row: 7, column: 7))
+    }
 }

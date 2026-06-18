@@ -8,6 +8,10 @@ struct ContentView: View {
     @EnvironmentObject private var monetization: MonetizationStore
     @State private var showingStore = false
     @State private var showingLegal = false
+    @State private var showingStoreParentGate = false
+    @State private var storeParentGateChallenge = ParentGateChallenge.make()
+    @State private var storeParentGateAnswer = ""
+    @State private var storeParentGateMessage: String?
     @State private var showingVictoryCelebration = false
     @State private var showingEncouragementCelebration = false
     @State private var victoryCelebrationID = 0
@@ -15,7 +19,10 @@ struct ContentView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let usesSidebar = proxy.size.width >= 900 && proxy.size.width > proxy.size.height
+            let isLandscape = proxy.size.width > proxy.size.height
+            let landscapeChromeReserve: CGFloat = isLandscape ? 78 : 0
+            let usesSidebar = proxy.size.width >= 900 && proxy.size.height >= 640 && isLandscape
+            let usesCompactLandscape = !usesSidebar && isLandscape && proxy.size.width >= 560
             let isTabletPortrait = proxy.size.width >= 700 && !usesSidebar
 
             NavigationStack {
@@ -23,32 +30,60 @@ struct ContentView: View {
                     PlayfulBackdrop()
 
                     if usesSidebar {
-                        let outerPadding: CGFloat = 14
-                        let gap: CGFloat = 18
-                        let panelWidth = min(330, max(300, proxy.size.width * 0.25))
-                        let statusHeight: CGFloat = 74
-                        let boardSpacing: CGFloat = 8
+                        let outerPadding: CGFloat = 10
+                        let gap: CGFloat = 12
+                        let panelWidth = min(300, max(278, proxy.size.width * 0.22))
+                        let statusHeight: CGFloat = 64
+                        let boardSpacing: CGFloat = 6
                         let usableWidth = proxy.size.width - outerPadding * 2 - gap - panelWidth
-                        let usableHeight = proxy.size.height - outerPadding - statusHeight - boardSpacing - 8
-                        let boardDimension = max(520, min(usableWidth, usableHeight))
+                        let usableHeight = proxy.size.height - landscapeChromeReserve - outerPadding * 2 - statusHeight - boardSpacing - 12
+                        let boardDimension = max(320, min(usableWidth, usableHeight))
 
                         HStack(alignment: .top, spacing: gap) {
                             boardArea(boardDimension: boardDimension, compact: true)
                                 .frame(width: boardDimension)
-                            controlPanel(compact: false)
-                                .frame(width: panelWidth)
+                            ScrollView {
+                                controlPanel(compact: false)
+                            }
+                            .scrollIndicators(.hidden)
+                            .frame(width: panelWidth)
+                            .frame(maxHeight: proxy.size.height - outerPadding * 2)
                         }
                         .padding(.horizontal, outerPadding)
                         .padding(.top, outerPadding)
-                    } else if isTabletPortrait {
-                        let outerPadding: CGFloat = 12
-                        let statusHeight: CGFloat = 74
+                    } else if usesCompactLandscape {
+                        let outerPadding: CGFloat = 8
+                        let gap: CGFloat = 10
+                        let panelWidth = min(320, max(270, proxy.size.width * 0.34))
+                        let statusHeight: CGFloat = 64
                         let boardSpacing: CGFloat = 8
-                        let toolbarSpacing: CGFloat = 12
-                        let toolbarHeight: CGFloat = 158
+                        let boardAvailableWidth = proxy.size.width - outerPadding * 2 - gap - panelWidth
+                        let boardAvailableHeight = proxy.size.height - landscapeChromeReserve - outerPadding * 2 - statusHeight - boardSpacing - 12
+                        let boardDimension = max(160, min(boardAvailableWidth, boardAvailableHeight))
+
+                        HStack(alignment: .top, spacing: gap) {
+                            boardArea(boardDimension: boardDimension, compact: true)
+                                .frame(width: boardDimension)
+
+                            ScrollView {
+                                controlPanel(compact: true)
+                            }
+                            .scrollIndicators(.hidden)
+                            .frame(width: panelWidth)
+                            .frame(maxHeight: proxy.size.height - outerPadding * 2)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.horizontal, outerPadding)
+                        .padding(.top, outerPadding)
+                    } else if isTabletPortrait {
+                        let outerPadding: CGFloat = 10
+                        let statusHeight: CGFloat = 64
+                        let boardSpacing: CGFloat = 6
+                        let toolbarSpacing: CGFloat = 8
+                        let toolbarHeight: CGFloat = 128
                         let usableWidth = proxy.size.width - outerPadding * 2
-                        let usableHeight = proxy.size.height - outerPadding - statusHeight - boardSpacing - toolbarSpacing - toolbarHeight - 8
-                        let boardDimension = max(420, min(usableWidth, usableHeight))
+                        let usableHeight = proxy.size.height - outerPadding - statusHeight - boardSpacing - toolbarSpacing - toolbarHeight - 6
+                        let boardDimension = max(380, min(usableWidth, usableHeight))
 
                         VStack(spacing: toolbarSpacing) {
                             boardArea(boardDimension: boardDimension, compact: true)
@@ -60,29 +95,55 @@ struct ContentView: View {
                         .padding(.horizontal, outerPadding)
                         .padding(.top, outerPadding)
                     } else {
-                        ScrollView {
-                            VStack(spacing: 18) {
-                                boardArea(boardDimension: nil, compact: false)
-                                controlPanel(compact: false)
+                        let outerPadding: CGFloat = 10
+                        let statusHeight: CGFloat = 64
+                        let dashboardHeight: CGFloat = 150
+                        let spacing: CGFloat = 8
+                        let usableWidth = proxy.size.width - outerPadding * 2
+                        let usableHeight = proxy.size.height - outerPadding * 2 - statusHeight - dashboardHeight - spacing * 2
+                        let boardDimension = min(usableWidth, max(270, usableHeight))
+
+                        ViewThatFits(in: .vertical) {
+                            VStack(spacing: spacing) {
+                                boardArea(boardDimension: boardDimension, compact: true)
+                                    .frame(width: boardDimension)
+                                centeredFunctionBar
+                                    .frame(width: boardDimension)
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding(16)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                            .padding(.horizontal, outerPadding)
+                            .padding(.top, outerPadding)
+
+                            ScrollView {
+                                VStack(spacing: spacing) {
+                                    boardArea(boardDimension: boardDimension, compact: true)
+                                        .frame(width: boardDimension)
+                                    centeredFunctionBar
+                                        .frame(width: boardDimension)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.horizontal, outerPadding)
+                                .padding(.top, outerPadding)
+                            }
                         }
                     }
 
                     if showingVictoryCelebration, let winner = viewModel.outcome.winner {
                         VictoryCelebrationOverlay(winner: winner)
                             .id(victoryCelebrationID)
+                            .allowsHitTesting(false)
                             .transition(.opacity.combined(with: .scale(scale: 0.92)))
                             .zIndex(20)
                     }
 
                     if showingEncouragementCelebration {
-                        EncouragementCelebrationOverlay()
+                        EncouragementCelebrationOverlay(difficulty: viewModel.difficulty)
                             .id(encouragementCelebrationID)
+                            .allowsHitTesting(false)
                             .transition(.opacity.combined(with: .scale(scale: 0.92)))
                             .zIndex(21)
                     }
+
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .navigationTitle("五子棋")
@@ -99,9 +160,20 @@ struct ContentView: View {
                         .accessibilityLabel("法律與隱私")
                     }
 
+                    #if DEBUG && canImport(GoogleMobileAds) && os(iOS)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            showingStore = true
+                            monetization.presentAdInspector()
+                        } label: {
+                            Image(systemName: "stethoscope")
+                        }
+                        .accessibilityLabel("Ad Inspector")
+                    }
+                    #endif
+
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            requestStoreParentGate()
                         } label: {
                             Image(systemName: monetization.adsRemoved ? "checkmark.seal.fill" : "rectangle.slash")
                         }
@@ -117,9 +189,20 @@ struct ContentView: View {
                         .accessibilityLabel("法律與隱私")
                     }
 
+                    #if DEBUG && canImport(GoogleMobileAds) && os(iOS)
                     ToolbarItem {
                         Button {
-                            showingStore = true
+                            monetization.presentAdInspector()
+                        } label: {
+                            Image(systemName: "stethoscope")
+                        }
+                        .accessibilityLabel("Ad Inspector")
+                    }
+                    #endif
+
+                    ToolbarItem {
+                        Button {
+                            requestStoreParentGate()
                         } label: {
                             Image(systemName: monetization.adsRemoved ? "checkmark.seal.fill" : "rectangle.slash")
                         }
@@ -130,6 +213,10 @@ struct ContentView: View {
                 .safeAreaInset(edge: .bottom) {
                     AdBannerSlot()
                         .environmentObject(monetization)
+                }
+                .sheet(isPresented: $showingStoreParentGate) {
+                    storeParentGateSheet
+                        .presentationDetents([.height(360), .medium])
                 }
                 .sheet(isPresented: $showingStore) {
                     RemoveAdsView()
@@ -143,8 +230,17 @@ struct ContentView: View {
                 .onChange(of: viewModel.outcome) { _, newOutcome in
                     handleOutcomeChange(newOutcome)
                 }
+                .onChange(of: viewModel.board.movesPlayed) { oldCount, newCount in
+                    if newCount > oldCount {
+                        StoneDropHaptics.playIfPhone()
+                    }
+                }
             }
         }
+    }
+
+    private var showsBeginnerHintControls: Bool {
+        viewModel.difficulty == .beginner
     }
 
     @MainActor
@@ -162,6 +258,15 @@ struct ContentView: View {
                 showingEncouragementCelebration = false
             }
         }
+    }
+
+    @MainActor
+    private func restartGame() {
+        withAnimation(.easeInOut(duration: 0.16)) {
+            showingVictoryCelebration = false
+            showingEncouragementCelebration = false
+        }
+        viewModel.startNewGame()
     }
 
     @MainActor
@@ -204,6 +309,100 @@ struct ContentView: View {
         }
     }
 
+    private func requestStoreParentGate() {
+        guard !monetization.adsRemoved else {
+            showingStore = true
+            return
+        }
+
+        storeParentGateChallenge = ParentGateChallenge.make()
+        storeParentGateAnswer = ""
+        storeParentGateMessage = nil
+        showingStoreParentGate = true
+    }
+
+    private func submitStoreParentGate() {
+        let normalizedAnswer = storeParentGateAnswer.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard normalizedAnswer == storeParentGateChallenge.answer else {
+            storeParentGateMessage = "爸爸媽媽加油！！請再試一次吧！！"
+            storeParentGateChallenge = ParentGateChallenge.make()
+            storeParentGateAnswer = ""
+            return
+        }
+
+        showingStoreParentGate = false
+        storeParentGateAnswer = ""
+        storeParentGateMessage = nil
+
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 220_000_000)
+            showingStore = true
+        }
+    }
+
+    private var storeParentGateSheet: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack(spacing: 12) {
+                Image(systemName: "lock.shield.fill")
+                    .font(.system(size: 34, weight: .heavy))
+                    .foregroundStyle(KidTheme.berry)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("親子鎖")
+                        .font(.title3.weight(.heavy))
+                        .foregroundStyle(KidTheme.ink)
+                    Text("移除廣告由家長設定")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(KidTheme.ink.opacity(0.64))
+                }
+            }
+
+            Text("通過確認後才會開啟移除廣告頁面；真正購買前仍會再確認一次。")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(KidTheme.ink.opacity(0.66))
+                .fixedSize(horizontal: false, vertical: true)
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text(storeParentGateChallenge.question)
+                    .font(.headline.weight(.heavy))
+                    .foregroundStyle(KidTheme.ink)
+
+                TextField("答案", text: $storeParentGateAnswer)
+                    .keyboardType(.numberPad)
+                    .textInputAutocapitalization(.never)
+                    .disableAutocorrection(true)
+                    .font(.title3.weight(.heavy))
+                    .multilineTextAlignment(.center)
+                    .padding(.vertical, 12)
+                    .background(.white.opacity(0.92), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .stroke(KidTheme.berry.opacity(0.24), lineWidth: 1.5)
+                    )
+
+                if let storeParentGateMessage {
+                    Text(storeParentGateMessage)
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(KidTheme.berry)
+                }
+            }
+
+            HStack(spacing: 10) {
+                Button("取消") {
+                    showingStoreParentGate = false
+                }
+                .buttonStyle(CuteSecondaryButtonStyle())
+
+                Button("開啟") {
+                    submitStoreParentGate()
+                }
+                .buttonStyle(CutePrimaryButtonStyle())
+                .disabled(storeParentGateAnswer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+        }
+        .padding(22)
+    }
+
     private func boardArea(boardDimension: CGFloat?, compact: Bool) -> some View {
         VStack(spacing: compact ? 8 : 16) {
             CuteStatusBar(
@@ -211,21 +410,22 @@ struct ContentView: View {
                 subtitle: "手數 \(viewModel.moveCountText)",
                 isThinking: viewModel.isAIThinking,
                 compact: compact,
-                onNewGame: viewModel.startNewGame
+                onNewGame: restartGame
             )
-            .frame(height: compact ? 74 : nil)
+            .frame(height: compact ? 64 : nil)
 
             GomokuBoardView(
                 board: viewModel.board,
                 lastMove: viewModel.lastMove,
                 winningLine: viewModel.winningLine,
+                hintMoves: viewModel.boardGuideMoves,
+                aiHighlightedMove: viewModel.aiHighlightedMove,
                 canTap: viewModel.canTapBoard,
                 onTap: { move in
-                    if viewModel.handleTap(on: move) {
-                        StoneDropHaptics.playIfPhone()
-                    }
+                    submitMove(move)
                 }
             )
+            .id(viewModel.gameID)
             .frame(width: boardDimension, height: boardDimension)
             .frame(maxWidth: boardDimension == nil ? 720 : nil)
             .overlay(alignment: .topTrailing) {
@@ -240,100 +440,33 @@ struct ContentView: View {
     }
 
     private func controlPanel(compact: Bool) -> some View {
-        VStack(alignment: .leading, spacing: compact ? 12 : 17) {
-            HStack(spacing: compact ? 8 : 12) {
-                Image("GomokuMascots")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: compact ? 54 : 82, height: compact ? 54 : 82)
-                    .accessibilityHidden(true)
+        VStack(alignment: .leading, spacing: compact ? 9 : 11) {
+            dashboardHeader(compact: compact)
 
-                VStack(alignment: .leading, spacing: compact ? 2 : 4) {
-                    Text("五子棋")
-                        .font((compact ? Font.headline : Font.title3).weight(.heavy))
-                        .foregroundStyle(KidTheme.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.78)
-                    Text("目前：\(viewModel.currentTurn.displayName)")
-                        .font((compact ? Font.caption : Font.subheadline).weight(.semibold))
-                        .foregroundStyle(KidTheme.berry)
-                        .lineLimit(1)
-                }
-
-                Spacer(minLength: 0)
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 2), spacing: 8) {
+                turnInfoChip(compact: compact)
+                secondaryInfoChip(compact: compact)
             }
 
-            HStack(spacing: 8) {
-                CuteIconBubble(systemImage: "star.fill", color: KidTheme.sunny)
-                CuteIconBubble(systemImage: "heart.fill", color: KidTheme.berry)
-                CuteIconBubble(systemImage: "sparkles", color: KidTheme.lavender)
+            ControlSection(title: "模式", systemImage: "gamecontroller.fill", compact: compact) {
+                modeSelector(compact: compact)
             }
 
-            ControlSection(title: "模式", systemImage: "gamecontroller.fill") {
-                Picker("模式", selection: Binding(get: {
-                    viewModel.mode
-                }, set: {
-                    viewModel.selectMode($0)
-                })) {
-                    ForEach(GameMode.allCases) { mode in
-                        Text(mode.displayName).tag(mode)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .controlSize(compact ? .small : .regular)
-            }
-
-            ControlSection(title: "難易度", systemImage: "wand.and.stars") {
-                Picker("難易度", selection: Binding(get: {
-                    viewModel.difficulty
-                }, set: {
-                    viewModel.selectDifficulty($0)
-                })) {
-                    ForEach(AIDifficulty.allCases) { difficulty in
-                        Text(difficulty.displayName).tag(difficulty)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .controlSize(compact ? .small : .regular)
-            }
-
-            Divider()
-                .overlay(KidTheme.sunny.opacity(0.85))
-
-            HStack(spacing: 10) {
-                StoneToken(stone: viewModel.currentTurn)
-                    .frame(width: compact ? 18 : 22, height: compact ? 18 : 22)
-                Text(viewModel.currentTurn.displayName)
-                    .font((compact ? Font.subheadline : Font.headline).weight(.bold))
-                    .foregroundStyle(KidTheme.ink)
-                Spacer(minLength: 0)
-                if viewModel.isAIThinking {
-                    ProgressView()
-                        .controlSize(.small)
-                        .tint(KidTheme.berry)
+            if viewModel.mode == .versusAI {
+                ControlSection(title: "先手", systemImage: "flag.checkered", compact: compact) {
+                    firstMoveSelector(compact: compact)
                 }
             }
 
-            MoveHistoryView(records: viewModel.moveHistory, limit: compact ? 4 : 8, compact: compact)
-
-            Button {
-                showingStore = true
-            } label: {
-                Label(monetization.adsRemoved ? "已移除廣告" : "移除廣告", systemImage: monetization.adsRemoved ? "checkmark.seal.fill" : "rectangle.slash")
-                    .frame(maxWidth: .infinity)
+            ControlSection(title: "難度", systemImage: "wand.and.stars", compact: compact) {
+                difficultySelector(compact: compact)
             }
-            .buttonStyle(CuteSecondaryButtonStyle())
-            .disabled(monetization.adsRemoved)
 
-            Button {
-                showingLegal = true
-            } label: {
-                Label("法律與隱私", systemImage: "lock.shield.fill")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(CuteSecondaryButtonStyle())
+            beginnerHintStrip(compact: compact)
+
+            dashboardActions(compact: compact)
         }
-        .padding(compact ? 14 : 18)
+        .padding(compact ? 12 : 14)
         .background(CandyPanelBackground())
         .overlay(alignment: .topTrailing) {
             CandySticker(systemImage: "sparkles", color: KidTheme.lavender, compact: true)
@@ -342,97 +475,273 @@ struct ContentView: View {
     }
 
     private var centeredFunctionBar: some View {
-        VStack(alignment: .leading, spacing: 11) {
-            HStack(spacing: 12) {
-                Image("GomokuMascots")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 54, height: 54)
-                    .accessibilityHidden(true)
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                dashboardHeader(compact: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("五子棋")
-                        .font(.headline.weight(.heavy))
-                        .foregroundStyle(KidTheme.ink)
-                        .lineLimit(1)
-                    Text("目前：\(viewModel.currentTurn.displayName)")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(KidTheme.berry)
-                        .lineLimit(1)
-                }
-
-                Spacer(minLength: 0)
-
-                HStack(spacing: 8) {
-                    StoneToken(stone: viewModel.currentTurn)
-                        .frame(width: 18, height: 18)
-                    Text(viewModel.currentTurn.displayName)
-                        .font(.subheadline.weight(.bold))
-                        .foregroundStyle(KidTheme.ink)
-                        .lineLimit(1)
-                    if viewModel.isAIThinking {
-                        ProgressView()
-                            .controlSize(.small)
-                            .tint(KidTheme.berry)
-                    }
-                }
-
-                Button {
-                    showingStore = true
-                } label: {
-                    Label(monetization.adsRemoved ? "已移除廣告" : "移除廣告", systemImage: monetization.adsRemoved ? "checkmark.seal.fill" : "rectangle.slash")
-                }
-                .buttonStyle(CuteSecondaryButtonStyle(compact: true))
-                .disabled(monetization.adsRemoved)
-
-                Button {
-                    showingLegal = true
-                } label: {
-                    Label("隱私", systemImage: "lock.shield.fill")
-                }
-                .buttonStyle(CuteSecondaryButtonStyle(compact: true))
+                dashboardActions(compact: true)
+                    .fixedSize(horizontal: true, vertical: false)
             }
 
-            HStack(alignment: .top, spacing: 12) {
-                ControlSection(title: "模式", systemImage: "gamecontroller.fill", compact: true) {
-                    Picker("模式", selection: Binding(get: {
-                        viewModel.mode
-                    }, set: {
-                        viewModel.selectMode($0)
-                    })) {
-                        ForEach(GameMode.allCases) { mode in
-                            Text(mode.displayName).tag(mode)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .controlSize(.small)
+            HStack(spacing: 8) {
+                modeSelector(compact: true)
+                    .frame(maxWidth: .infinity)
+                difficultySelector(compact: true)
+                    .frame(maxWidth: .infinity)
+                if viewModel.mode == .versusAI {
+                    firstMoveSelector(compact: true)
+                        .frame(maxWidth: .infinity)
                 }
-                .frame(maxWidth: .infinity)
-
-                ControlSection(title: "難易度", systemImage: "wand.and.stars", compact: true) {
-                    Picker("難易度", selection: Binding(get: {
-                        viewModel.difficulty
-                    }, set: {
-                        viewModel.selectDifficulty($0)
-                    })) {
-                        ForEach(AIDifficulty.allCases) { difficulty in
-                            Text(difficulty.displayName).tag(difficulty)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .controlSize(.small)
-                }
-                .frame(maxWidth: .infinity)
-
-                MoveHistoryView(records: viewModel.moveHistory, limit: 3, compact: true)
-                    .frame(width: 150)
             }
+
+            HStack(spacing: 8) {
+                turnInfoChip(compact: true)
+                secondaryInfoChip(compact: true)
+            }
+
+            beginnerHintStrip(compact: true)
         }
-        .padding(14)
+        .padding(10)
         .background(CandyPanelBackground())
         .overlay(alignment: .topTrailing) {
             CandySticker(systemImage: "sparkles", color: KidTheme.lavender, compact: true)
                 .offset(x: 8, y: -8)
+        }
+    }
+
+    @MainActor
+    private func submitMove(_ move: Move) {
+        viewModel.handleTap(on: move)
+    }
+
+    private var aiMoveText: String {
+        if viewModel.mode == .localTwoPlayer {
+            return "雙人"
+        }
+        if viewModel.isAIThinking {
+            return "最多 3 秒"
+        }
+        if let lastAIMove = viewModel.lastAIMove {
+            return lastAIMove.boardNotation
+        }
+        return "尚未"
+    }
+
+    @ViewBuilder
+    private func secondaryInfoChip(compact: Bool) -> some View {
+        if viewModel.mode == .localTwoPlayer {
+            Button {
+                viewModel.toggleTurnHandoffPrompt()
+            } label: {
+                FunctionInfoChip(
+                    title: "回合提示",
+                    value: viewModel.isTurnHandoffPromptEnabled ? "開啟" : "關閉",
+                    systemImage: viewModel.isTurnHandoffPromptEnabled ? "bell.fill" : "bell.slash.fill",
+                    color: viewModel.isTurnHandoffPromptEnabled ? KidTheme.mint : KidTheme.ink.opacity(0.54),
+                    compact: compact
+                )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("回合提示")
+            .accessibilityValue(viewModel.isTurnHandoffPromptEnabled ? "開啟" : "關閉")
+            .accessibilityHint("點兩下切換雙人模式回合提示")
+        } else {
+            FunctionInfoChip(
+                title: "AI 落點",
+                value: aiMoveText,
+                systemImage: viewModel.isAIThinking ? "timer" : "mappin.circle.fill",
+                color: KidTheme.berry,
+                compact: compact
+            )
+        }
+    }
+
+    private func turnInfoChip(compact: Bool) -> some View {
+        TurnInfoChip(
+            stone: viewModel.currentTurn,
+            isProminent: viewModel.mode == .localTwoPlayer && viewModel.isTurnHandoffPromptEnabled,
+            compact: compact
+        )
+    }
+
+    @ViewBuilder
+    private func beginnerHintStrip(compact: Bool) -> some View {
+        if showsBeginnerHintControls {
+            VStack(alignment: .leading, spacing: compact ? 6 : 8) {
+                if let title = viewModel.beginnerCoachTitle, let message = viewModel.beginnerCoachMessage {
+                    BeginnerCoachBubble(title: title, message: message, compact: compact)
+                }
+
+                HStack(spacing: 8) {
+                    Label("下一步提示", systemImage: viewModel.isBeginnerMoveHintEnabled ? "lightbulb.fill" : "lightbulb.slash.fill")
+                        .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                        .foregroundStyle(KidTheme.ink)
+                        .lineLimit(1)
+
+                    Spacer(minLength: 0)
+
+                    Button {
+                        viewModel.toggleBeginnerMoveHints()
+                    } label: {
+                        Label(
+                            viewModel.isBeginnerMoveHintEnabled ? "關閉提示" : "開啟提示",
+                            systemImage: viewModel.isBeginnerMoveHintEnabled ? "eye.slash.fill" : "eye.fill"
+                        )
+                    }
+                    .buttonStyle(CuteSecondaryButtonStyle(compact: true))
+                    .accessibilityLabel(viewModel.isBeginnerMoveHintEnabled ? "關閉下一步提示" : "開啟下一步提示")
+                }
+
+                if viewModel.isBeginnerMoveHintEnabled {
+                    BeginnerHintEnabledChip(compact: compact)
+                        .accessibilityLabel("下一步提示已開啟，請看棋盤上半透明的位置")
+                } else {
+                    Button {
+                        viewModel.toggleBeginnerMoveHints()
+                    } label: {
+                        BeginnerHintDisabledChip(compact: compact)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("下一步提示已關閉，點兩下重新開啟")
+                }
+            }
+        }
+    }
+
+    private func dashboardHeader(compact: Bool) -> some View {
+        HStack(spacing: compact ? 8 : 10) {
+            Image("GomokuMascots")
+                .resizable()
+                .scaledToFit()
+                .frame(width: compact ? 36 : 48, height: compact ? 36 : 48)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: compact ? 1 : 2) {
+                Text("五子棋")
+                    .font((compact ? Font.subheadline : Font.headline).weight(.heavy))
+                    .foregroundStyle(KidTheme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.78)
+                Text(viewModel.statusTitle)
+                    .font((compact ? Font.caption2 : Font.caption).weight(.bold))
+                    .foregroundStyle(viewModel.isAIThinking ? KidTheme.berry : KidTheme.ink.opacity(0.62))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+            }
+        }
+    }
+
+    private func modeSelector(compact: Bool) -> some View {
+        Picker("模式", selection: Binding(get: {
+            viewModel.mode
+        }, set: {
+            viewModel.selectMode($0)
+        })) {
+            ForEach(GameMode.allCases) { mode in
+                Text(mode.displayName).tag(mode)
+            }
+        }
+        .pickerStyle(.segmented)
+        .controlSize(.small)
+    }
+
+    private func difficultySelector(compact: Bool) -> some View {
+        Menu {
+            ForEach(AIDifficulty.allCases) { difficulty in
+                Button {
+                    viewModel.selectDifficulty(difficulty)
+                } label: {
+                    if difficulty == viewModel.difficulty {
+                        Label(difficulty.displayName, systemImage: "checkmark")
+                    } else {
+                        Text(difficulty.displayName)
+                    }
+                }
+            }
+        } label: {
+            HStack(spacing: compact ? 5 : 7) {
+                Image(systemName: "wand.and.stars")
+                    .font(.system(size: compact ? 12 : 13, weight: .heavy))
+                Text(viewModel.difficulty.displayName)
+                    .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: compact ? 9 : 10, weight: .heavy))
+            }
+            .foregroundStyle(KidTheme.ink)
+            .padding(.horizontal, compact ? 9 : 11)
+            .padding(.vertical, compact ? 7 : 8)
+            .background(.white.opacity(0.90), in: Capsule(style: .continuous))
+            .overlay(
+                Capsule(style: .continuous)
+                    .stroke(KidTheme.berry.opacity(0.20), lineWidth: 1.25)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func firstMoveSelector(compact: Bool) -> some View {
+        Button {
+            viewModel.toggleStartingPlayer()
+        } label: {
+            HStack(spacing: compact ? 5 : 7) {
+                Image(systemName: viewModel.startingPlayer == .ai ? "cpu.fill" : "person.fill")
+                    .font(.system(size: compact ? 12 : 13, weight: .heavy))
+                Text(viewModel.startingPlayer.displayName)
+                    .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.70)
+                Spacer(minLength: 0)
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .font(.system(size: compact ? 9 : 10, weight: .heavy))
+            }
+            .foregroundStyle(KidTheme.ink)
+            .padding(.horizontal, compact ? 9 : 11)
+            .padding(.vertical, compact ? 7 : 8)
+            .background(.white.opacity(0.90), in: Capsule(style: .continuous))
+            .overlay(
+                Capsule(style: .continuous)
+                    .stroke((viewModel.startingPlayer == .ai ? KidTheme.mint : KidTheme.berry).opacity(0.22), lineWidth: 1.25)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("先手")
+        .accessibilityValue(viewModel.startingPlayer.displayName)
+        .accessibilityHint("點兩下切換玩家先手或AI先手，並開始新局")
+    }
+
+    private func dashboardActions(compact: Bool) -> some View {
+        HStack(spacing: compact ? 6 : 8) {
+            Button {
+                viewModel.undoMove()
+            } label: {
+                Label(compact ? "悔棋" : "悔棋一次", systemImage: "arrow.uturn.backward.circle.fill")
+            }
+            .buttonStyle(CuteSecondaryButtonStyle(compact: true))
+            .disabled(!viewModel.canUndoMove)
+            .accessibilityLabel("悔棋一次")
+            .accessibilityValue(viewModel.undoStatusText)
+
+            Button {
+                requestStoreParentGate()
+            } label: {
+                Label(
+                    monetization.adsRemoved ? (compact ? "已移除" : "已移除廣告") : (compact ? "廣告" : "移除廣告"),
+                    systemImage: monetization.adsRemoved ? "checkmark.seal.fill" : "rectangle.slash"
+                )
+            }
+            .buttonStyle(CuteSecondaryButtonStyle(compact: true))
+            .disabled(monetization.adsRemoved)
+
+            Button {
+                showingLegal = true
+            } label: {
+                Label("隱私", systemImage: "lock.shield.fill")
+            }
+            .buttonStyle(CuteSecondaryButtonStyle(compact: true))
         }
     }
 }
@@ -461,47 +770,194 @@ private extension View {
     }
 }
 
-private struct MoveHistoryView: View {
-    let records: [MoveRecord]
-    var limit = 8
+private struct FunctionInfoChip: View {
+    let title: String
+    let value: String
+    let systemImage: String
+    let color: Color
     var compact = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: compact ? 7 : 9) {
-            Label("棋譜", systemImage: "list.bullet.clipboard.fill")
-                .font((compact ? Font.subheadline : Font.headline).weight(.bold))
-                .foregroundStyle(KidTheme.ink)
+        HStack(spacing: compact ? 6 : 8) {
+            Image(systemName: systemImage)
+                .font(.system(size: compact ? 13 : 15, weight: .heavy))
+                .foregroundStyle(color)
+                .frame(width: compact ? 18 : 22)
 
-            if records.isEmpty {
-                HStack(spacing: compact ? 6 : 8) {
-                    Image(systemName: "sparkles")
-                        .foregroundStyle(KidTheme.sunny)
-                    Text("尚未落子")
-                        .font((compact ? Font.caption : Font.subheadline).weight(.semibold))
-                        .foregroundStyle(KidTheme.ink.opacity(0.58))
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical, compact ? 3 : 6)
-            } else {
-                let recent = records.suffix(limit)
-                VStack(spacing: compact ? 5 : 7) {
-                    ForEach(recent) { record in
-                        HStack {
-                            Text("\(record.number)")
-                                .font((compact ? Font.caption2 : Font.caption).weight(.bold).monospacedDigit())
-                                .foregroundStyle(KidTheme.berry.opacity(0.74))
-                                .frame(width: compact ? 20 : 28, alignment: .leading)
-                            StoneToken(stone: record.stone)
-                                .frame(width: compact ? 14 : 18, height: compact ? 14 : 18)
-                            Text(record.notation)
-                                .font((compact ? Font.caption : Font.subheadline).weight(.semibold).monospacedDigit())
-                                .foregroundStyle(KidTheme.ink)
-                            Spacer(minLength: 0)
-                        }
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                    .font((compact ? Font.caption2 : Font.caption).weight(.bold))
+                    .foregroundStyle(KidTheme.ink.opacity(0.54))
+                    .lineLimit(1)
+                Text(value)
+                    .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                    .foregroundStyle(KidTheme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.68)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, compact ? 8 : 10)
+        .padding(.vertical, compact ? 6 : 7)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.white.opacity(0.78), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(color.opacity(0.18), lineWidth: 1.25)
+        )
+    }
+}
+
+private struct TurnInfoChip: View {
+    let stone: Stone
+    let isProminent: Bool
+    var compact = false
+
+    var body: some View {
+        HStack(spacing: compact ? 6 : 8) {
+            StoneToken(stone: stone)
+                .frame(width: compact ? 18 : 22, height: compact ? 18 : 22)
+                .overlay {
+                    if isProminent {
+                        Circle()
+                            .stroke(KidTheme.sunny.opacity(0.52), lineWidth: 2)
+                            .padding(-4)
                     }
                 }
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(isProminent ? "輪到這一色" : "回合")
+                    .font((compact ? Font.caption2 : Font.caption).weight(.bold))
+                    .foregroundStyle(KidTheme.ink.opacity(0.54))
+                    .lineLimit(1)
+                Text(isProminent ? "\(stone.displayName)下" : stone.displayName)
+                    .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                    .foregroundStyle(KidTheme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.68)
             }
+
+            Spacer(minLength: 0)
         }
+        .padding(.horizontal, compact ? 8 : 10)
+        .padding(.vertical, compact ? 6 : 7)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.white.opacity(isProminent ? 0.86 : 0.78), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke((stone == .black ? KidTheme.ink : KidTheme.sunny).opacity(isProminent ? 0.28 : 0.18), lineWidth: 1.25)
+        )
+        .accessibilityLabel(isProminent ? "輪到\(stone.displayName)下" : "\(stone.displayName)回合")
+    }
+}
+
+private struct BeginnerCoachBubble: View {
+    let title: String
+    let message: String
+    var compact = false
+
+    var body: some View {
+        HStack(spacing: compact ? 7 : 9) {
+            Image(systemName: "lightbulb.fill")
+                .font(.system(size: compact ? 14 : 16, weight: .heavy))
+                .foregroundStyle(KidTheme.sunny)
+                .frame(width: compact ? 20 : 24)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                    .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                    .foregroundStyle(KidTheme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+                Text(message)
+                    .font(.caption2.weight(.bold))
+                    .foregroundStyle(KidTheme.ink.opacity(0.58))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.68)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, compact ? 8 : 10)
+        .padding(.vertical, compact ? 6 : 8)
+        .frame(maxWidth: .infinity, minHeight: compact ? 38 : 44, alignment: .leading)
+        .background(.white.opacity(0.74), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(KidTheme.sunny.opacity(0.26), lineWidth: 1.25)
+        )
+    }
+}
+
+private struct BeginnerHintEnabledChip: View {
+    var compact = false
+
+    var body: some View {
+        HStack(spacing: compact ? 7 : 9) {
+            Image(systemName: "circle.dotted.circle.fill")
+                .font(.system(size: compact ? 15 : 17, weight: .heavy))
+                .foregroundStyle(KidTheme.mint)
+                .frame(width: compact ? 22 : 26)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text("看棋盤上亮亮的位置")
+                    .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                    .foregroundStyle(KidTheme.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+                Text("輪到你時會出現")
+                    .font(.caption2.weight(.bold))
+                    .foregroundStyle(KidTheme.ink.opacity(0.56))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, compact ? 8 : 10)
+        .padding(.vertical, compact ? 7 : 8)
+        .frame(maxWidth: .infinity, minHeight: compact ? 38 : 44, alignment: .leading)
+        .background(.white.opacity(0.72), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(KidTheme.mint.opacity(0.22), lineWidth: 1.25)
+        )
+    }
+}
+
+private struct BeginnerHintDisabledChip: View {
+    var compact = false
+
+    var body: some View {
+        HStack(spacing: compact ? 7 : 9) {
+            Image(systemName: "lightbulb.slash.fill")
+                .font(.system(size: compact ? 14 : 16, weight: .heavy))
+                .foregroundStyle(KidTheme.ink.opacity(0.50))
+                .frame(width: compact ? 22 : 26)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text("提示已關閉")
+                    .font((compact ? Font.caption : Font.subheadline).weight(.heavy))
+                    .foregroundStyle(KidTheme.ink)
+                    .lineLimit(1)
+                Text("點一下可以再開啟")
+                    .font(.caption2.weight(.bold))
+                    .foregroundStyle(KidTheme.ink.opacity(0.56))
+                    .lineLimit(1)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, compact ? 8 : 10)
+        .padding(.vertical, compact ? 7 : 8)
+        .frame(maxWidth: .infinity, minHeight: compact ? 38 : 44, alignment: .leading)
+        .background(.white.opacity(0.70), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .stroke(KidTheme.ink.opacity(0.12), lineWidth: 1.25)
+        )
     }
 }
 
@@ -517,7 +973,7 @@ private struct CuteStatusBar: View {
             Image("GomokuMascots")
                 .resizable()
                 .scaledToFit()
-                .frame(width: compact ? 68 : 92, height: compact ? 54 : 72)
+                .frame(width: compact ? 54 : 92, height: compact ? 42 : 72)
                 .accessibilityHidden(true)
                 .overlay(alignment: .topTrailing) {
                     Image(systemName: "sparkles")
@@ -549,13 +1005,19 @@ private struct CuteStatusBar: View {
                     .tint(KidTheme.berry)
             }
 
-            Button(action: onNewGame) {
+            Button {
+                onNewGame()
+            } label: {
                 Label("新局", systemImage: "arrow.clockwise")
             }
             .buttonStyle(CutePrimaryButtonStyle(compact: compact))
+            .contentShape(Capsule(style: .continuous))
+            .allowsHitTesting(true)
+            .zIndex(4)
+            .accessibilityLabel("開始新局")
         }
-        .padding(.horizontal, compact ? 12 : 16)
-        .padding(.vertical, compact ? 6 : 10)
+        .padding(.horizontal, compact ? 10 : 16)
+        .padding(.vertical, compact ? 5 : 10)
         .background(CandyPanelBackground())
     }
 }
@@ -656,23 +1118,7 @@ private struct CandySticker: View {
             )
             .shadow(color: color.opacity(0.22), radius: 8, x: 0, y: 4)
             .accessibilityHidden(true)
-    }
-}
-
-private struct CuteIconBubble: View {
-    let systemImage: String
-    let color: Color
-
-    var body: some View {
-        Circle()
-            .fill(color.opacity(0.16))
-            .frame(width: 26, height: 26)
-            .overlay(
-                Image(systemName: systemImage)
-                    .font(.system(size: 12, weight: .heavy))
-                    .foregroundStyle(color)
-            )
-            .accessibilityHidden(true)
+            .allowsHitTesting(false)
     }
 }
 
@@ -705,6 +1151,7 @@ private struct PlayfulBackdrop: View {
                 }
             }
             .ignoresSafeArea()
+            .allowsHitTesting(false)
         }
     }
 
@@ -736,6 +1183,7 @@ private struct CutePrimaryButtonStyle: ButtonStyle {
                 Capsule(style: .continuous)
                     .fill(LinearGradient(colors: [KidTheme.berry, KidTheme.coral], startPoint: .topLeading, endPoint: .bottomTrailing))
             )
+            .contentShape(Capsule(style: .continuous))
             .shadow(color: KidTheme.berry.opacity(configuration.isPressed ? 0.12 : 0.30), radius: configuration.isPressed ? 2 : 8, x: 0, y: configuration.isPressed ? 1 : 5)
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.easeOut(duration: 0.06), value: configuration.isPressed)
@@ -757,6 +1205,7 @@ private struct CuteSecondaryButtonStyle: ButtonStyle {
                 Capsule(style: .continuous)
                     .fill(Color.white.opacity(configuration.isPressed ? 0.72 : 0.92))
             )
+            .contentShape(Capsule(style: .continuous))
             .overlay(
                 Capsule(style: .continuous)
                     .stroke(KidTheme.berry.opacity(0.22), lineWidth: 1.5)

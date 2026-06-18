@@ -44,6 +44,16 @@ final class MonetizationStore: ObservableObject {
         configurePurchases()
     }
 
+    #if DEBUG && canImport(GoogleMobileAds) && os(iOS)
+    func presentAdInspector() {
+        MobileAds.shared.presentAdInspector(from: nil) { error in
+            if let error {
+                print("Ad Inspector failed: \(error.localizedDescription)")
+            }
+        }
+    }
+    #endif
+
     func refreshCustomerInfo() {
         #if canImport(RevenueCat)
         guard isRevenueCatReady else {
@@ -75,9 +85,9 @@ final class MonetizationStore: ObservableObject {
 
         purchaseState = .loading
         Purchases.shared.getOfferings { [weak self] offerings, error in
-            guard let package = offerings?.current?.availablePackages.first else {
+            guard let package = Self.removeAdsPackage(from: offerings) else {
                 Task { @MainActor in
-                    self?.purchaseState = .failed(error?.localizedDescription ?? "RevenueCat offering 尚未設定")
+                    self?.purchaseState = .failed(error?.localizedDescription ?? "RevenueCat offering 找不到移除廣告商品")
                 }
                 return
             }
@@ -143,8 +153,15 @@ final class MonetizationStore: ObservableObject {
             return
         }
 
+        #if DEBUG
         Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: AppConfig.revenueCatAPIKey)
+        #else
+        Purchases.logLevel = .warn
+        #endif
+
+        let configuration = Configuration.Builder(withAPIKey: AppConfig.revenueCatAPIKey)
+            .with(entitlementVerificationMode: .informational)
+        Purchases.configure(with: configuration)
         refreshCustomerInfo()
         #endif
     }
@@ -155,8 +172,21 @@ final class MonetizationStore: ObservableObject {
         !AppConfig.revenueCatAPIKey.contains("REVENUECAT_PUBLIC")
     }
 
+    private static func removeAdsPackage(from offerings: Offerings?) -> Package? {
+        offerings?.current?.availablePackages.first {
+            $0.storeProduct.productIdentifier == AppConfig.removeAdsProductID
+        }
+    }
+
     private func apply(customerInfo: CustomerInfo) {
-        adsRemoved = customerInfo.entitlements[AppConfig.removeAdsEntitlementID]?.isActive == true
+        guard let entitlement = customerInfo.entitlements[AppConfig.removeAdsEntitlementID],
+              entitlement.isActive else {
+            adsRemoved = false
+            return
+        }
+
+        adsRemoved = entitlement.verification != .failed &&
+            customerInfo.entitlements.verification != .failed
     }
     #endif
 }

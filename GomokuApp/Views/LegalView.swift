@@ -3,6 +3,7 @@ import SwiftUI
 struct LegalView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var parentAnswer = ""
+    @State private var parentGateChallenge = ParentGateChallenge.make()
     @State private var linksUnlocked = false
     @State private var gateMessage: String?
 
@@ -88,6 +89,7 @@ struct LegalView: View {
         LegalSection(title: "Apple 標準 EULA", systemImage: "doc.text.fill") {
             LegalPoint(systemImage: "checkmark.seal.fill", text: "除非日後另行提供自訂條款，本 App 在 App Store 下載與使用時，適用 Apple 標準終端使用者授權合約。")
             LegalPoint(systemImage: "cart.fill", text: "移除廣告的購買與恢復購買由 Apple App Store 付款流程處理，購買狀態由 RevenueCat 協助同步。")
+            LegalPoint(systemImage: "lock.shield.fill", text: "移除廣告頁面、購買與恢復購買都會先要求家長完成親子鎖確認。")
         }
     }
 
@@ -101,7 +103,7 @@ struct LegalView: View {
 
     private var privacySection: some View {
         LegalSection(title: "隱私權聲明", systemImage: "lock.shield.fill") {
-            LegalPoint(systemImage: "gamecontroller.fill", text: "遊戲資料：棋局狀態、棋譜、目前回合、模式與難易度只用於顯示與判斷遊戲。")
+            LegalPoint(systemImage: "gamecontroller.fill", text: "遊戲資料：棋局狀態、最後落點、目前回合、模式與難易度只用於顯示與判斷遊戲。")
             LegalPoint(systemImage: "creditcard.fill", text: "購買資料：Apple 與 RevenueCat 會處理內購、恢復購買與移除廣告權益狀態；本 App 不會直接接收信用卡資料。")
             LegalPoint(systemImage: "antenna.radiowaves.left.and.right", text: "廣告資料：Google AdMob 可能依其 SDK 處理廣告請求所需資料；本 App 已設定兒童導向、未達同意年齡、非個人化與一般級內容限制。")
             LegalPoint(systemImage: "trash.fill", text: "資料刪除：若有任何與孩子相關的資料查詢或刪除需求，請由家長聯絡我們處理。")
@@ -112,7 +114,7 @@ struct LegalView: View {
         LegalSection(title: "廣告與移除廣告", systemImage: "sparkles.tv.fill") {
             LegalPoint(systemImage: "rectangle.inset.filled", text: "廣告只放在畫面下方版位，避免遮住棋盤操作。")
             LegalPoint(systemImage: "shield.lefthalf.filled", text: "面向兒童的版本不應使用行為式個人化廣告；目前程式已關閉個人化處理並限制廣告內容級別。")
-            LegalPoint(systemImage: "checkmark.circle.fill", text: "購買移除廣告後，App 會隱藏廣告版位；重新安裝或換裝置時可使用恢復購買。")
+            LegalPoint(systemImage: "checkmark.circle.fill", text: "家長購買移除廣告後，App 會隱藏廣告版位；重新安裝或換裝置時可使用恢復購買。")
         }
     }
 
@@ -146,7 +148,7 @@ struct LegalView: View {
                 }
             } else {
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("家長請輸入 8 + 9 的答案以解鎖官方連結。")
+                    Text(parentGateChallenge.question)
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(LegalTheme.ink)
 
@@ -189,11 +191,14 @@ struct LegalView: View {
     }
 
     private func unlockParentLinks() {
-        if parentAnswer.trimmingCharacters(in: .whitespacesAndNewlines) == "17" {
+        if parentAnswer.trimmingCharacters(in: .whitespacesAndNewlines) == parentGateChallenge.answer {
             linksUnlocked = true
+            parentAnswer = ""
             gateMessage = nil
         } else {
-            gateMessage = "答案不正確，請由家長再試一次。"
+            gateMessage = "爸爸媽媽加油！！請再試一次吧！！"
+            parentGateChallenge = ParentGateChallenge.make()
+            parentAnswer = ""
         }
     }
 }

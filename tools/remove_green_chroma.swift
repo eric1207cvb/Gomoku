@@ -1,11 +1,25 @@
 import AppKit
 
-guard CommandLine.arguments.count == 3 else {
-    fatalError("Usage: swift tools/remove_green_chroma.swift <input.png> <output.png>")
+guard CommandLine.arguments.count == 3 || CommandLine.arguments.count == 4 else {
+    fatalError("Usage: swift tools/remove_green_chroma.swift <input.png> <output.png> [key-hex]")
 }
 
 let inputURL = URL(fileURLWithPath: CommandLine.arguments[1])
 let outputURL = URL(fileURLWithPath: CommandLine.arguments[2])
+let keyHex = CommandLine.arguments.count == 4 ? CommandLine.arguments[3] : "00ff00"
+
+func colorComponents(from hex: String) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+    let normalized = hex.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+    guard normalized.count == 6, let value = Int(normalized, radix: 16) else {
+        fatalError("Key color must be a 6-digit hex value, for example ff00ff")
+    }
+
+    return (
+        r: CGFloat((value >> 16) & 0xff) / 255.0,
+        g: CGFloat((value >> 8) & 0xff) / 255.0,
+        b: CGFloat(value & 0xff) / 255.0
+    )
+}
 
 guard let image = NSImage(contentsOf: inputURL),
       let tiff = image.tiffRepresentation,
@@ -25,7 +39,7 @@ guard let image = NSImage(contentsOf: inputURL),
     fatalError("Could not open input image")
 }
 
-let key = (r: 0.0, g: 1.0, b: 0.0)
+let key = colorComponents(from: keyHex)
 let transparentThreshold = 0.30
 let featherThreshold = 0.72
 
@@ -47,8 +61,11 @@ for y in 0..<source.pixelsHigh {
             alpha = color.alphaComponent
         }
 
-        let despill = alpha < 1 ? min(g, max(r, b) * 1.08) : g
-        let output = NSColor(deviceRed: r, green: despill, blue: b, alpha: alpha)
+        let maxNonKey = max(key.r > 0.8 ? 0 : r, key.g > 0.8 ? 0 : g, key.b > 0.8 ? 0 : b)
+        let outputRed = alpha < 1 && key.r > 0.8 ? min(r, maxNonKey * 1.08) : r
+        let outputGreen = alpha < 1 && key.g > 0.8 ? min(g, maxNonKey * 1.08) : g
+        let outputBlue = alpha < 1 && key.b > 0.8 ? min(b, maxNonKey * 1.08) : b
+        let output = NSColor(deviceRed: outputRed, green: outputGreen, blue: outputBlue, alpha: alpha)
         bitmap.setColor(output, atX: x, y: y)
     }
 }

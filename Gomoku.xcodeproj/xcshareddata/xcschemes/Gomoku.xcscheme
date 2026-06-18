@@ -48,6 +48,9 @@
             ReferencedContainer = "container:Gomoku.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StoreKitConfigurationFileReference
+         identifier = "../../GomokuApp/Resources/StoreKit/Gomoku.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

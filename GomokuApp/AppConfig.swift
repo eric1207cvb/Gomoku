@@ -1,8 +1,9 @@
 import Foundation
 
 enum AppConfig {
-    static let revenueCatAPIKey = "REVENUECAT_PUBLIC_APPLE_API_KEY"
+    static let revenueCatAPIKey = "appl_JapCuXHAlEGhowhEDXucvvwEttP"
     static let removeAdsEntitlementID = "remove_ads"
+    static let removeAdsProductID = "gomoku.remove_ads"
 
     static let admobAppID = "ca-app-pub-8563333250584395~5604315500"
     static let admobBannerAdUnitID = "ca-app-pub-8563333250584395/6733605907"
