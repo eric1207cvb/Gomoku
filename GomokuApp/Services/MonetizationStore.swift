@@ -183,8 +183,8 @@ final class MonetizationStore: ObservableObject {
             return
         }
 
-        adsRemoved = entitlement.verification != .failed &&
-            customerInfo.entitlements.verification != .failed
+        adsRemoved = entitlement.verification.isVerified &&
+            customerInfo.entitlements.verification.isVerified
     }
     #endif
 }
