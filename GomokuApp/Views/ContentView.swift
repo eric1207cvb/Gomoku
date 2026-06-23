@@ -5,6 +5,7 @@ import UIKit
 
 struct ContentView: View {
     @StateObject private var viewModel = GameViewModel()
+    @Environment(\.openURL) private var openURL
     @EnvironmentObject private var monetization: MonetizationStore
     @State private var showingStore = false
     @State private var showingLegal = false
@@ -157,15 +158,6 @@ struct ContentView: View {
                 .toolbar(isPhoneLandscape ? .hidden : .visible, for: .navigationBar)
                 .toolbar {
                     #if os(iOS)
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            showingLegal = true
-                        } label: {
-                            Image(systemName: "doc.text.fill")
-                        }
-                        .accessibilityLabel("法律與隱私")
-                    }
-
                     #if DEBUG && canImport(GoogleMobileAds) && os(iOS)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
@@ -186,15 +178,6 @@ struct ContentView: View {
                         .accessibilityLabel("移除廣告")
                     }
                     #else
-                    ToolbarItem {
-                        Button {
-                            showingLegal = true
-                        } label: {
-                            Image(systemName: "doc.text.fill")
-                        }
-                        .accessibilityLabel("法律與隱私")
-                    }
-
                     #if DEBUG && canImport(GoogleMobileAds) && os(iOS)
                     ToolbarItem {
                         Button {
@@ -399,6 +382,7 @@ struct ContentView: View {
             beginnerHintStrip(compact: compact)
 
             dashboardActions(compact: compact)
+            legalFooterLinks(compact: compact)
         }
         .padding(compact ? 12 : 14)
         .background(CandyPanelBackground())
@@ -435,6 +419,8 @@ struct ContentView: View {
             }
 
             beginnerHintStrip(compact: true)
+
+            legalFooterLinks(compact: true)
         }
         .padding(10)
         .background(CandyPanelBackground())
@@ -669,14 +655,28 @@ struct ContentView: View {
             }
             .buttonStyle(CuteSecondaryButtonStyle(compact: true))
             .disabled(monetization.adsRemoved)
+        }
+    }
 
+    private func legalFooterLinks(compact: Bool) -> some View {
+        HStack(spacing: compact ? 6 : 8) {
             Button {
                 showingLegal = true
             } label: {
-                Label("隱私", systemImage: "lock.shield.fill")
+                Label("法律與隱私", systemImage: "lock.shield.fill")
             }
             .buttonStyle(CuteSecondaryButtonStyle(compact: true))
+            .frame(maxWidth: .infinity)
+
+            Button {
+                openURL(AppConfig.appleStandardEULAURL)
+            } label: {
+                Label("Apple EULA", systemImage: "doc.text.fill")
+            }
+            .buttonStyle(CuteSecondaryButtonStyle(compact: true))
+            .frame(maxWidth: .infinity)
         }
+        .padding(.top, compact ? 2 : 4)
     }
 }
 
