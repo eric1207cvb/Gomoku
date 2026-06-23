@@ -556,7 +556,7 @@ struct ContentView: View {
             return "雙人"
         }
         if viewModel.isAIThinking {
-            return "最多 3 秒"
+            return "思考中"
         }
         if let lastAIMove = viewModel.lastAIMove {
             return lastAIMove.boardNotation
