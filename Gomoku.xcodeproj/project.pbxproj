@@ -12,9 +12,6 @@
 		100000000000000000000103 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000203 /* GameViewModel.swift */; };
 		100000000000000000000104 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000204 /* ContentView.swift */; };
 		100000000000000000000105 /* GomokuBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000205 /* GomokuBoardView.swift */; };
-		100000000000000000000106 /* AdBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000206 /* AdBannerView.swift */; };
-		100000000000000000000107 /* RemoveAdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000207 /* RemoveAdsView.swift */; };
-		100000000000000000000108 /* MonetizationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000208 /* MonetizationStore.swift */; };
 		100000000000000000000109 /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000209 /* Move.swift */; };
 		100000000000000000000110 /* Stone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000210 /* Stone.swift */; };
 		100000000000000000000111 /* GameOutcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000211 /* GameOutcome.swift */; };
@@ -23,9 +20,6 @@
 		100000000000000000000114 /* LocalGomokuAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000214 /* LocalGomokuAI.swift */; };
 		100000000000000000000115 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000215 /* Assets.xcassets */; };
 		100000000000000000000116 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000217 /* PrivacyInfo.xcprivacy */; };
-		100000000000000000000117 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000901 /* GoogleMobileAds */; };
-		100000000000000000000118 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000902 /* RevenueCat */; };
-		100000000000000000000119 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 100000000000000000000903 /* RevenueCatUI */; };
 		100000000000000000000120 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000218 /* LegalView.swift */; };
 		100000000000000000000121 /* VictoryCelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000219 /* VictoryCelebrationView.swift */; };
 		100000000000000000000122 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 100000000000000000000220 /* LaunchScreen.storyboard */; };
@@ -38,9 +32,6 @@
 		100000000000000000000203 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		100000000000000000000204 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		100000000000000000000205 /* GomokuBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomokuBoardView.swift; sourceTree = "<group>"; };
-		100000000000000000000206 /* AdBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdBannerView.swift; sourceTree = "<group>"; };
-		100000000000000000000207 /* RemoveAdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAdsView.swift; sourceTree = "<group>"; };
-		100000000000000000000208 /* MonetizationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetizationStore.swift; sourceTree = "<group>"; };
 		100000000000000000000209 /* Move.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
 		100000000000000000000210 /* Stone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stone.swift; sourceTree = "<group>"; };
 		100000000000000000000211 /* GameOutcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOutcome.swift; sourceTree = "<group>"; };
@@ -53,7 +44,6 @@
 		100000000000000000000218 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
 		100000000000000000000219 /* VictoryCelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryCelebrationView.swift; sourceTree = "<group>"; };
 		100000000000000000000220 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		100000000000000000000221 /* Gomoku.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gomoku.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,9 +51,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				100000000000000000000117 /* GoogleMobileAds in Frameworks */,
-				100000000000000000000118 /* RevenueCat in Frameworks */,
-				100000000000000000000119 /* RevenueCatUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,8 +84,6 @@
 			children = (
 				100000000000000000000204 /* ContentView.swift */,
 				100000000000000000000205 /* GomokuBoardView.swift */,
-				100000000000000000000206 /* AdBannerView.swift */,
-				100000000000000000000207 /* RemoveAdsView.swift */,
 				100000000000000000000218 /* LegalView.swift */,
 				100000000000000000000219 /* VictoryCelebrationView.swift */,
 			);
@@ -108,7 +93,6 @@
 		100000000000000000000404 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				100000000000000000000208 /* MonetizationStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -120,17 +104,8 @@
 				100000000000000000000216 /* Info.plist */,
 				100000000000000000000217 /* PrivacyInfo.xcprivacy */,
 				100000000000000000000220 /* LaunchScreen.storyboard */,
-				100000000000000000000408 /* StoreKit */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		100000000000000000000408 /* StoreKit */ = {
-			isa = PBXGroup;
-			children = (
-				100000000000000000000221 /* Gomoku.storekit */,
-			);
-			path = StoreKit;
 			sourceTree = "<group>";
 		};
 		100000000000000000000406 /* Sources/GomokuCore */ = {
@@ -171,9 +146,6 @@
 			);
 			name = Gomoku;
 			packageProductDependencies = (
-				100000000000000000000901 /* GoogleMobileAds */,
-				100000000000000000000902 /* RevenueCat */,
-				100000000000000000000903 /* RevenueCatUI */,
 			);
 			productName = Gomoku;
 			productReference = 100000000000000000000200 /* Gomoku.app */;
@@ -204,8 +176,6 @@
 			);
 			mainGroup = 100000000000000000000401;
 			packageReferences = (
-				100000000000000000000801 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
-				100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			productRefGroup = 100000000000000000000407 /* Products */;
 			projectDirPath = "";
@@ -239,9 +209,6 @@
 				100000000000000000000103 /* GameViewModel.swift in Sources */,
 				100000000000000000000104 /* ContentView.swift in Sources */,
 				100000000000000000000105 /* GomokuBoardView.swift in Sources */,
-				100000000000000000000106 /* AdBannerView.swift in Sources */,
-				100000000000000000000107 /* RemoveAdsView.swift in Sources */,
-				100000000000000000000108 /* MonetizationStore.swift in Sources */,
 				100000000000000000000120 /* LegalView.swift in Sources */,
 				100000000000000000000121 /* VictoryCelebrationView.swift in Sources */,
 				100000000000000000000109 /* Move.swift in Sources */,
@@ -454,42 +421,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		100000000000000000000801 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.0.0;
-			};
-		};
-		100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		100000000000000000000901 /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 100000000000000000000801 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
-		};
-		100000000000000000000902 /* RevenueCat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
-			productName = RevenueCat;
-		};
-		100000000000000000000903 /* RevenueCatUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 100000000000000000000802 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
-			productName = RevenueCatUI;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 100000000000000000000001 /* Project object */;
 }
