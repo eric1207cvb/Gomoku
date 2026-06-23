@@ -77,7 +77,7 @@ struct LegalView: View {
 
     private var summarySection: some View {
         LegalSection(title: "重點摘要", systemImage: "star.circle.fill") {
-            LegalPoint(systemImage: "person.crop.circle.badge.xmark", text: "不需要註冊帳號，也不會要求使用者輸入姓名、電話、地址、精確位置、照片或語音。")
+            LegalPoint(systemImage: "person.crop.circle.badge.xmark", text: "本 App 不會要求使用者輸入姓名、電話、地址、精確位置、照片或語音。")
             LegalPoint(systemImage: "cpu.fill", text: "五子棋 AI 在裝置上運算；棋盤、手數、模式與難易度只用來進行目前遊戲。")
             LegalPoint(systemImage: "bubble.left.and.bubble.right.fill", text: "沒有公開聊天、社群貼文或讓使用者互相傳訊的功能。")
             LegalPoint(systemImage: "rectangle.slash", text: "免費版有 Google AdMob 廣告版位；家長可透過 RevenueCat 與 Apple 內購移除廣告。")
