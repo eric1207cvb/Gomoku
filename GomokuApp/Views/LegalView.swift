@@ -76,7 +76,7 @@ struct LegalView: View {
             LegalPoint(systemImage: "person.crop.circle.badge.xmark", text: "本 App 不會要求使用者輸入姓名、電話、地址、精確位置、照片或語音。")
             LegalPoint(systemImage: "cpu.fill", text: "五子棋 AI 在裝置上運算；棋盤、手數、模式與難易度只用來進行目前遊戲。")
             LegalPoint(systemImage: "bubble.left.and.bubble.right.fill", text: "沒有公開聊天、社群貼文或讓使用者互相傳訊的功能。")
-            LegalPoint(systemImage: "rectangle.slash", text: "免費版有 Google AdMob 廣告版位；可透過 RevenueCat 與 Apple 內購移除廣告。")
+            LegalPoint(systemImage: "rectangle.slash", text: "免費版會顯示廣告；可透過 Apple 內購移除廣告。")
         }
     }
 
@@ -91,7 +91,7 @@ struct LegalView: View {
         LegalSection(title: "家庭隱私", systemImage: "person.2.fill") {
             LegalPoint(systemImage: "hand.raised.fill", text: "本 App 以家庭與棋盤遊戲使用情境設計，不會主動索取可識別個人的資料。")
             LegalPoint(systemImage: "envelope.fill", text: "如果你想查詢或刪除與本 App 相關的資料，請使用下方聯絡信箱。")
-            LegalPoint(systemImage: "megaphone.fill", text: "廣告請求限制為非個人化處理與一般級內容，App 不要求 ATT 追蹤授權，也不使用 IDFA。")
+            LegalPoint(systemImage: "megaphone.fill", text: "廣告採非個人化方式呈現，並且不會要求你允許跨 App 追蹤。")
         }
     }
 
@@ -99,15 +99,15 @@ struct LegalView: View {
         LegalSection(title: "隱私權聲明", systemImage: "lock.shield.fill") {
             LegalPoint(systemImage: "gamecontroller.fill", text: "遊戲資料：棋局狀態、最後落點、目前回合、模式與難易度只用於顯示與判斷遊戲。")
             LegalPoint(systemImage: "creditcard.fill", text: "購買資料：Apple 與 RevenueCat 會處理內購、恢復購買與移除廣告權益狀態；本 App 不會直接接收信用卡資料。")
-            LegalPoint(systemImage: "antenna.radiowaves.left.and.right", text: "廣告資料：Google AdMob 可能依其 SDK 處理廣告請求所需資料；本 App 已設定非個人化與一般級內容限制。")
+            LegalPoint(systemImage: "antenna.radiowaves.left.and.right", text: "廣告資料：廣告服務可能處理顯示廣告所需的基本請求資訊；不會用於個人化追蹤。")
             LegalPoint(systemImage: "trash.fill", text: "資料刪除：若有任何資料查詢或刪除需求，請聯絡我們處理。")
         }
     }
 
     private var adsSection: some View {
         LegalSection(title: "廣告與移除廣告", systemImage: "sparkles.tv.fill") {
-            LegalPoint(systemImage: "rectangle.inset.filled", text: "廣告只放在畫面下方版位，避免遮住棋盤操作。")
-            LegalPoint(systemImage: "shield.lefthalf.filled", text: "目前程式已關閉個人化廣告處理，限制廣告內容級別，並且不要求 App Tracking Transparency。")
+            LegalPoint(systemImage: "rectangle.inset.filled", text: "免費版會在不影響棋盤操作的位置顯示廣告。")
+            LegalPoint(systemImage: "shield.lefthalf.filled", text: "廣告採非個人化方式呈現，內容以一般觀眾適合的範圍為準。")
             LegalPoint(systemImage: "checkmark.circle.fill", text: "購買移除廣告後，App 會隱藏廣告版位；重新安裝或換裝置時可使用恢復購買。")
         }
     }
