@@ -8,7 +8,6 @@ struct LegalView: View {
     @State private var gateMessage: String?
 
     private let updatedDate = "2026-06-23"
-    private let coppaGuideURL = URL(string: "https://www.ftc.gov/business-guidance/resources/childrens-online-privacy-protection-rule-six-step-compliance-plan-your-business")!
     private let appleGuidelinesURL = URL(string: "https://developer.apple.com/app-store/review/guidelines/")!
 
     var body: some View {
@@ -21,9 +20,9 @@ struct LegalView: View {
                         header
                         summarySection
                         eulaSection
-                        coppaSection
+                        familyPrivacySection
                         privacySection
-                        childSafetySection
+                        adsSection
                         parentLinksSection
                         contactSection
                     }
@@ -66,7 +65,7 @@ struct LegalView: View {
                     .foregroundStyle(LegalTheme.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.78)
-                Text("五子棋給孩子玩，也讓家長知道資料與兒童隱私怎麼處理。")
+                Text("五子棋給家庭一起玩，也讓使用者知道資料、廣告與購買怎麼處理。")
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(LegalTheme.ink.opacity(0.64))
                     .fixedSize(horizontal: false, vertical: true)
@@ -78,43 +77,43 @@ struct LegalView: View {
 
     private var summarySection: some View {
         LegalSection(title: "重點摘要", systemImage: "star.circle.fill") {
-            LegalPoint(systemImage: "person.crop.circle.badge.xmark", text: "不需要註冊帳號，也不會要求孩子輸入姓名、電話、地址、精確位置、照片或語音。")
+            LegalPoint(systemImage: "person.crop.circle.badge.xmark", text: "不需要註冊帳號，也不會要求使用者輸入姓名、電話、地址、精確位置、照片或語音。")
             LegalPoint(systemImage: "cpu.fill", text: "五子棋 AI 在裝置上運算；棋盤、手數、模式與難易度只用來進行目前遊戲。")
-            LegalPoint(systemImage: "bubble.left.and.bubble.right.fill", text: "沒有公開聊天、社群貼文或讓孩子互相傳訊的功能。")
-            LegalPoint(systemImage: "rectangle.slash", text: "本版本不包含第三方廣告，也沒有 App 內購買項目。")
+            LegalPoint(systemImage: "bubble.left.and.bubble.right.fill", text: "沒有公開聊天、社群貼文或讓使用者互相傳訊的功能。")
+            LegalPoint(systemImage: "rectangle.slash", text: "免費版有 Google AdMob 廣告版位；家長可透過 RevenueCat 與 Apple 內購移除廣告。")
         }
     }
 
     private var eulaSection: some View {
         LegalSection(title: "Apple 標準 EULA", systemImage: "doc.text.fill") {
             LegalPoint(systemImage: "checkmark.seal.fill", text: "除非日後另行提供自訂條款，本 App 在 App Store 下載與使用時，適用 Apple 標準終端使用者授權合約。")
-            LegalPoint(systemImage: "cart.fill", text: "本 App 目前沒有訂閱、一次性內購或付費解鎖功能。")
-            LegalPoint(systemImage: "lock.shield.fill", text: "外部網站連結會先要求家長完成親子鎖確認。")
+            LegalPoint(systemImage: "cart.fill", text: "移除廣告的購買與恢復購買由 Apple App Store 付款流程處理，購買狀態由 RevenueCat 協助同步。")
+            LegalPoint(systemImage: "lock.shield.fill", text: "移除廣告頁面、購買與恢復購買都會先要求家長完成親子鎖確認。")
         }
     }
 
-    private var coppaSection: some View {
-        LegalSection(title: "COPPA 與兒童隱私", systemImage: "figure.2.and.child.holdinghands") {
-            LegalPoint(systemImage: "hand.raised.fill", text: "本 App 以兒童與家庭使用情境設計，不會主動向 13 歲以下兒童索取可識別個人的資料。")
-            LegalPoint(systemImage: "envelope.fill", text: "如果家長認為孩子曾提供個人資料，或想查詢、刪除與孩子相關的資料，請使用下方聯絡信箱。")
-            LegalPoint(systemImage: "megaphone.slash.fill", text: "本版本不會顯示第三方廣告，也不會使用廣告 SDK。")
+    private var familyPrivacySection: some View {
+        LegalSection(title: "家庭隱私", systemImage: "person.2.fill") {
+            LegalPoint(systemImage: "hand.raised.fill", text: "本 App 以家庭與棋盤遊戲使用情境設計，不會主動索取可識別個人的資料。")
+            LegalPoint(systemImage: "envelope.fill", text: "如果你想查詢或刪除與本 App 相關的資料，請使用下方聯絡信箱。")
+            LegalPoint(systemImage: "megaphone.fill", text: "廣告請求限制為非個人化處理與一般級內容，App 不要求 ATT 追蹤授權，也不使用 IDFA。")
         }
     }
 
     private var privacySection: some View {
         LegalSection(title: "隱私權聲明", systemImage: "lock.shield.fill") {
             LegalPoint(systemImage: "gamecontroller.fill", text: "遊戲資料：棋局狀態、最後落點、目前回合、模式與難易度只用於顯示與判斷遊戲。")
-            LegalPoint(systemImage: "chart.bar.xaxis", text: "分析資料：本 App 不包含第三方分析 SDK，也不建立行為分析或廣告個人化資料。")
-            LegalPoint(systemImage: "creditcard.fill", text: "購買資料：本 App 目前沒有 App 內購買項目，因此不會處理購買紀錄。")
-            LegalPoint(systemImage: "trash.fill", text: "資料刪除：若有任何與孩子相關的資料查詢或刪除需求，請由家長聯絡我們處理。")
+            LegalPoint(systemImage: "creditcard.fill", text: "購買資料：Apple 與 RevenueCat 會處理內購、恢復購買與移除廣告權益狀態；本 App 不會直接接收信用卡資料。")
+            LegalPoint(systemImage: "antenna.radiowaves.left.and.right", text: "廣告資料：Google AdMob 可能依其 SDK 處理廣告請求所需資料；本 App 已設定非個人化與一般級內容限制。")
+            LegalPoint(systemImage: "trash.fill", text: "資料刪除：若有任何資料查詢或刪除需求，請聯絡我們處理。")
         }
     }
 
-    private var childSafetySection: some View {
-        LegalSection(title: "兒童安全設計", systemImage: "figure.and.child.holdinghands") {
-            LegalPoint(systemImage: "rectangle.slash", text: "沒有第三方廣告、沒有獎勵廣告、沒有插頁廣告。")
-            LegalPoint(systemImage: "cart.badge.minus", text: "沒有訂閱、移除廣告商品或其他 App 內購買項目。")
-            LegalPoint(systemImage: "wifi.slash", text: "核心五子棋玩法與 AI 對手都在裝置上執行，不需要登入或連線到遊戲伺服器。")
+    private var adsSection: some View {
+        LegalSection(title: "廣告與移除廣告", systemImage: "sparkles.tv.fill") {
+            LegalPoint(systemImage: "rectangle.inset.filled", text: "廣告只放在畫面下方版位，避免遮住棋盤操作。")
+            LegalPoint(systemImage: "shield.lefthalf.filled", text: "目前程式已關閉個人化廣告處理，限制廣告內容級別，並且不要求 App Tracking Transparency。")
+            LegalPoint(systemImage: "checkmark.circle.fill", text: "家長購買移除廣告後，App 會隱藏廣告版位；重新安裝或換裝置時可使用恢復購買。")
         }
     }
 
@@ -139,9 +138,6 @@ struct LegalView: View {
                         LegalUnavailableLinkLabel(title: "正式隱私權頁面尚未設定", systemImage: "safari.fill")
                     }
 
-                    Link(destination: coppaGuideURL) {
-                        LegalExternalLinkLabel(title: "FTC COPPA 說明", systemImage: "building.columns.fill")
-                    }
                     Link(destination: appleGuidelinesURL) {
                         LegalExternalLinkLabel(title: "Apple App Review Guidelines", systemImage: "apple.logo")
                     }
@@ -185,7 +181,7 @@ struct LegalView: View {
 
     private var contactSection: some View {
         LegalSection(title: "家長聯絡", systemImage: "envelope.open.fill") {
-            LegalPoint(systemImage: "mail.fill", text: "隱私、COPPA 或資料刪除問題：\(AppConfig.privacyContactEmail)")
+            LegalPoint(systemImage: "mail.fill", text: "隱私、資料刪除、廣告或購買問題：\(AppConfig.privacyContactEmail)")
             LegalPoint(systemImage: "calendar", text: "最後更新：\(updatedDate)")
         }
     }
@@ -200,28 +196,6 @@ struct LegalView: View {
             parentGateChallenge = ParentGateChallenge.make()
             parentAnswer = ""
         }
-    }
-}
-
-struct ParentGateChallenge {
-    let question: String
-    let answer: String
-
-    static func make() -> ParentGateChallenge {
-        let left = Int.random(in: 1...9)
-        let right = Int.random(in: 1...9)
-        let product = left * right
-        let shouldAdd = Bool.random()
-        let adjustment = shouldAdd
-            ? Int.random(in: 1...9)
-            : Int.random(in: 1...min(9, product))
-        let result = shouldAdd ? product + adjustment : product - adjustment
-        let operatorText = shouldAdd ? "+" : "-"
-
-        return ParentGateChallenge(
-            question: "請計算 \(left) × \(right) \(operatorText) \(adjustment) 的答案",
-            answer: "\(result)"
-        )
     }
 }
 
