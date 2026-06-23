@@ -395,7 +395,7 @@ private extension GameViewModel {
     }
 
     var aiLossTitle: String {
-        difficulty == .master ? "爸爸媽媽加油" : "再試一次吧"
+        difficulty == .master ? "再挑戰一次吧" : "再試一次吧"
     }
 
     func openingHints(limit: Int) -> [BeginnerMoveHint] {

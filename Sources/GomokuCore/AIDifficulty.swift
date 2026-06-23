@@ -17,7 +17,7 @@ public enum AIDifficulty: String, CaseIterable, Codable, Sendable, Identifiable 
         case .tactical:
             "困難"
         case .master:
-            "家長挑戰"
+            "高手挑戰"
         }
     }
 

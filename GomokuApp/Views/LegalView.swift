@@ -2,10 +2,6 @@ import SwiftUI
 
 struct LegalView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var parentAnswer = ""
-    @State private var parentGateChallenge = ParentGateChallenge.make()
-    @State private var linksUnlocked = false
-    @State private var gateMessage: String?
 
     private let updatedDate = "2026-06-23"
     private let appleGuidelinesURL = URL(string: "https://developer.apple.com/app-store/review/guidelines/")!
@@ -23,7 +19,7 @@ struct LegalView: View {
                         familyPrivacySection
                         privacySection
                         adsSection
-                        parentLinksSection
+                        linksSection
                         contactSection
                     }
                     .frame(maxWidth: 760)
@@ -60,7 +56,7 @@ struct LegalView: View {
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("家長安心資訊")
+                Text("使用資訊")
                     .font(.title2.weight(.heavy))
                     .foregroundStyle(LegalTheme.ink)
                     .lineLimit(1)
@@ -80,7 +76,7 @@ struct LegalView: View {
             LegalPoint(systemImage: "person.crop.circle.badge.xmark", text: "本 App 不會要求使用者輸入姓名、電話、地址、精確位置、照片或語音。")
             LegalPoint(systemImage: "cpu.fill", text: "五子棋 AI 在裝置上運算；棋盤、手數、模式與難易度只用來進行目前遊戲。")
             LegalPoint(systemImage: "bubble.left.and.bubble.right.fill", text: "沒有公開聊天、社群貼文或讓使用者互相傳訊的功能。")
-            LegalPoint(systemImage: "rectangle.slash", text: "免費版有 Google AdMob 廣告版位；家長可透過 RevenueCat 與 Apple 內購移除廣告。")
+            LegalPoint(systemImage: "rectangle.slash", text: "免費版有 Google AdMob 廣告版位；可透過 RevenueCat 與 Apple 內購移除廣告。")
         }
     }
 
@@ -88,7 +84,6 @@ struct LegalView: View {
         LegalSection(title: "Apple 標準 EULA", systemImage: "doc.text.fill") {
             LegalPoint(systemImage: "checkmark.seal.fill", text: "除非日後另行提供自訂條款，本 App 在 App Store 下載與使用時，適用 Apple 標準終端使用者授權合約。")
             LegalPoint(systemImage: "cart.fill", text: "移除廣告的購買與恢復購買由 Apple App Store 付款流程處理，購買狀態由 RevenueCat 協助同步。")
-            LegalPoint(systemImage: "lock.shield.fill", text: "移除廣告頁面、購買與恢復購買都會先要求家長完成親子鎖確認。")
         }
     }
 
@@ -113,88 +108,41 @@ struct LegalView: View {
         LegalSection(title: "廣告與移除廣告", systemImage: "sparkles.tv.fill") {
             LegalPoint(systemImage: "rectangle.inset.filled", text: "廣告只放在畫面下方版位，避免遮住棋盤操作。")
             LegalPoint(systemImage: "shield.lefthalf.filled", text: "目前程式已關閉個人化廣告處理，限制廣告內容級別，並且不要求 App Tracking Transparency。")
-            LegalPoint(systemImage: "checkmark.circle.fill", text: "家長購買移除廣告後，App 會隱藏廣告版位；重新安裝或換裝置時可使用恢復購買。")
+            LegalPoint(systemImage: "checkmark.circle.fill", text: "購買移除廣告後，App 會隱藏廣告版位；重新安裝或換裝置時可使用恢復購買。")
         }
     }
 
-    private var parentLinksSection: some View {
-        LegalSection(title: "家長連結", systemImage: linksUnlocked ? "lock.open.fill" : "lock.fill") {
-            Text("下面的按鈕會開啟外部網站，請由家長操作。")
+    private var linksSection: some View {
+        LegalSection(title: "相關連結", systemImage: "link.circle.fill") {
+            Text("下面的按鈕會開啟外部網站。")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(LegalTheme.ink.opacity(0.64))
                 .fixedSize(horizontal: false, vertical: true)
 
-            if linksUnlocked {
-                VStack(spacing: 10) {
-                    Link(destination: AppConfig.appleStandardEULAURL) {
-                        LegalExternalLinkLabel(title: "Apple 標準 EULA", systemImage: "doc.text.fill")
-                    }
-
-                    if let privacyPolicyURL = AppConfig.privacyPolicyURL {
-                        Link(destination: privacyPolicyURL) {
-                            LegalExternalLinkLabel(title: "正式隱私權頁面", systemImage: "safari.fill")
-                        }
-                    } else {
-                        LegalUnavailableLinkLabel(title: "正式隱私權頁面尚未設定", systemImage: "safari.fill")
-                    }
-
-                    Link(destination: appleGuidelinesURL) {
-                        LegalExternalLinkLabel(title: "Apple App Review Guidelines", systemImage: "apple.logo")
-                    }
+            VStack(spacing: 10) {
+                Link(destination: AppConfig.appleStandardEULAURL) {
+                    LegalExternalLinkLabel(title: "Apple 標準 EULA", systemImage: "doc.text.fill")
                 }
-            } else {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(parentGateChallenge.question)
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(LegalTheme.ink)
 
-                    HStack(spacing: 10) {
-                        TextField("答案", text: $parentAnswer)
-                            .keyboardType(.numberPad)
-                            .textInputAutocapitalization(.never)
-                            .disableAutocorrection(true)
-                            .font(.headline.weight(.bold))
-                            .multilineTextAlignment(.center)
-                            .frame(width: 84)
-                            .padding(.vertical, 10)
-                            .background(.white.opacity(0.92), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                    .stroke(LegalTheme.sky.opacity(0.32), lineWidth: 1.5)
-                            )
-
-                        Button("解鎖") {
-                            unlockParentLinks()
-                        }
-                        .buttonStyle(LegalSmallButtonStyle())
+                if let privacyPolicyURL = AppConfig.privacyPolicyURL {
+                    Link(destination: privacyPolicyURL) {
+                        LegalExternalLinkLabel(title: "正式隱私權頁面", systemImage: "safari.fill")
                     }
+                } else {
+                    LegalUnavailableLinkLabel(title: "正式隱私權頁面尚未設定", systemImage: "safari.fill")
+                }
 
-                    if let gateMessage {
-                        Text(gateMessage)
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(LegalTheme.berry)
-                    }
+                Link(destination: appleGuidelinesURL) {
+                    LegalExternalLinkLabel(title: "Apple App Review Guidelines", systemImage: "apple.logo")
                 }
             }
         }
     }
 
     private var contactSection: some View {
-        LegalSection(title: "家長聯絡", systemImage: "envelope.open.fill") {
+        LegalSection(title: "聯絡方式", systemImage: "envelope.open.fill") {
             LegalPoint(systemImage: "mail.fill", text: "隱私、資料刪除、廣告或購買問題：\(AppConfig.privacyContactEmail)")
             LegalPoint(systemImage: "calendar", text: "最後更新：\(updatedDate)")
-        }
-    }
-
-    private func unlockParentLinks() {
-        if parentAnswer.trimmingCharacters(in: .whitespacesAndNewlines) == parentGateChallenge.answer {
-            linksUnlocked = true
-            parentAnswer = ""
-            gateMessage = nil
-        } else {
-            gateMessage = "爸爸媽媽加油！！請再試一次吧！！"
-            parentGateChallenge = ParentGateChallenge.make()
-            parentAnswer = ""
         }
     }
 }

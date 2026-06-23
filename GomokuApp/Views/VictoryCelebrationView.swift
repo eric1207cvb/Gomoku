@@ -212,9 +212,9 @@ struct EncouragementCelebrationOverlay: View {
             )
         case .master:
             EncouragementCopy(
-                title: "爸爸媽媽加油！！",
-                subtitle: "請再試一次吧！！",
-                footer: "換個想法再挑戰"
+                title: "再挑戰一次吧",
+                subtitle: "換個想法試試看",
+                footer: "下一局再挑戰"
             )
         }
     }

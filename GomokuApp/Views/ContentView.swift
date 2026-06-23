@@ -8,10 +8,6 @@ struct ContentView: View {
     @EnvironmentObject private var monetization: MonetizationStore
     @State private var showingStore = false
     @State private var showingLegal = false
-    @State private var showingStoreParentGate = false
-    @State private var storeParentGateChallenge = ParentGateChallenge.make()
-    @State private var storeParentGateAnswer = ""
-    @State private var storeParentGateMessage: String?
     @State private var showingVictoryCelebration = false
     @State private var showingEncouragementCelebration = false
     @State private var victoryCelebrationID = 0
@@ -183,7 +179,7 @@ struct ContentView: View {
 
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            requestStoreParentGate()
+                            showingStore = true
                         } label: {
                             Image(systemName: monetization.adsRemoved ? "checkmark.seal.fill" : "rectangle.slash")
                         }
@@ -212,7 +208,7 @@ struct ContentView: View {
 
                     ToolbarItem {
                         Button {
-                            requestStoreParentGate()
+                            showingStore = true
                         } label: {
                             Image(systemName: monetization.adsRemoved ? "checkmark.seal.fill" : "rectangle.slash")
                         }
@@ -223,10 +219,6 @@ struct ContentView: View {
                 .safeAreaInset(edge: .bottom) {
                     AdBannerSlot()
                         .environmentObject(monetization)
-                }
-                .sheet(isPresented: $showingStoreParentGate) {
-                    storeParentGateSheet
-                        .presentationDetents([.height(360), .medium])
                 }
                 .sheet(isPresented: $showingStore) {
                     RemoveAdsView()
@@ -317,100 +309,6 @@ struct ContentView: View {
                 showingEncouragementCelebration = false
             }
         }
-    }
-
-    private func requestStoreParentGate() {
-        guard !monetization.adsRemoved else {
-            showingStore = true
-            return
-        }
-
-        storeParentGateChallenge = ParentGateChallenge.make()
-        storeParentGateAnswer = ""
-        storeParentGateMessage = nil
-        showingStoreParentGate = true
-    }
-
-    private func submitStoreParentGate() {
-        let normalizedAnswer = storeParentGateAnswer.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard normalizedAnswer == storeParentGateChallenge.answer else {
-            storeParentGateMessage = "爸爸媽媽加油！！請再試一次吧！！"
-            storeParentGateChallenge = ParentGateChallenge.make()
-            storeParentGateAnswer = ""
-            return
-        }
-
-        showingStoreParentGate = false
-        storeParentGateAnswer = ""
-        storeParentGateMessage = nil
-
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 220_000_000)
-            showingStore = true
-        }
-    }
-
-    private var storeParentGateSheet: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack(spacing: 12) {
-                Image(systemName: "lock.shield.fill")
-                    .font(.system(size: 34, weight: .heavy))
-                    .foregroundStyle(KidTheme.berry)
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("親子鎖")
-                        .font(.title3.weight(.heavy))
-                        .foregroundStyle(KidTheme.ink)
-                    Text("移除廣告由家長設定")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(KidTheme.ink.opacity(0.64))
-                }
-            }
-
-            Text("通過確認後才會開啟移除廣告頁面；真正購買前仍會再確認一次。")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(KidTheme.ink.opacity(0.66))
-                .fixedSize(horizontal: false, vertical: true)
-
-            VStack(alignment: .leading, spacing: 8) {
-                Text(storeParentGateChallenge.question)
-                    .font(.headline.weight(.heavy))
-                    .foregroundStyle(KidTheme.ink)
-
-                TextField("答案", text: $storeParentGateAnswer)
-                    .keyboardType(.numberPad)
-                    .textInputAutocapitalization(.never)
-                    .disableAutocorrection(true)
-                    .font(.title3.weight(.heavy))
-                    .multilineTextAlignment(.center)
-                    .padding(.vertical, 12)
-                    .background(.white.opacity(0.92), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .stroke(KidTheme.berry.opacity(0.24), lineWidth: 1.5)
-                    )
-
-                if let storeParentGateMessage {
-                    Text(storeParentGateMessage)
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(KidTheme.berry)
-                }
-            }
-
-            HStack(spacing: 10) {
-                Button("取消") {
-                    showingStoreParentGate = false
-                }
-                .buttonStyle(CuteSecondaryButtonStyle())
-
-                Button("開啟") {
-                    submitStoreParentGate()
-                }
-                .buttonStyle(CutePrimaryButtonStyle())
-                .disabled(storeParentGateAnswer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-            }
-        }
-        .padding(22)
     }
 
     private func boardArea(
@@ -762,7 +660,7 @@ struct ContentView: View {
             .accessibilityValue(viewModel.undoStatusText)
 
             Button {
-                requestStoreParentGate()
+                showingStore = true
             } label: {
                 Label(
                     monetization.adsRemoved ? (compact ? "已移除" : "已移除廣告") : (compact ? "廣告" : "移除廣告"),
