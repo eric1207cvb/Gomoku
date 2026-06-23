@@ -68,6 +68,7 @@ struct LegalView: View {
             }
         }
         .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(LegalCardBackground())
     }
 
@@ -169,8 +170,10 @@ private struct LegalSection<Content: View>: View {
             VStack(alignment: .leading, spacing: 10) {
                 content
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(LegalCardBackground())
     }
 }
@@ -196,6 +199,7 @@ private struct LegalPoint: View {
                 .foregroundStyle(LegalTheme.ink.opacity(0.76))
                 .fixedSize(horizontal: false, vertical: true)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -216,6 +220,7 @@ private struct LegalExternalLinkLabel: View {
             Image(systemName: "arrow.up.right")
                 .font(.system(size: 12, weight: .heavy))
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundStyle(LegalTheme.berry)
         .padding(.horizontal, 13)
         .padding(.vertical, 11)
@@ -244,6 +249,7 @@ private struct LegalUnavailableLinkLabel: View {
             Image(systemName: "exclamationmark.circle.fill")
                 .font(.system(size: 13, weight: .heavy))
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundStyle(LegalTheme.ink.opacity(0.48))
         .padding(.horizontal, 13)
         .padding(.vertical, 11)
